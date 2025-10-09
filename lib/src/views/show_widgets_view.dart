@@ -1,4 +1,5 @@
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,13 @@ class ShowWidgetsView extends StatelessWidget {
               CustomTextFormField(
                 hintText: "Nombre de usuario",
                 prefixIcon: Icons.person_outline,
-                height: 60,
-              )
+                height: 50,
+              ),
+
+              CustomButton(
+                text: "Ingresar",
+                onTap: () => print("Ingresando"),
+              ),
 
             ],
           ),

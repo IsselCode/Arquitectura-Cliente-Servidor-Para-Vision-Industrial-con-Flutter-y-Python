@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/header_action_tile.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -91,7 +92,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                       label: "Admin",
                       asset: "assets/logo.png",
                       onChanged: (v) => setState(() => role = v),
-                      alignment: Alignment.bottomLeft,
+                      alignment: Alignment.centerLeft,
                     ),
                     RadioTile(
                       value: Role.calidad,
@@ -100,7 +101,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                       label: "Calidad",
                       asset: "assets/logo.png",
                       onChanged: (v) => setState(() => role = v),
-                      alignment: Alignment.bottomLeft,
+                      alignment: Alignment.centerLeft,
                     ),
                     RadioTile(
                       value: Role.tecnico,
@@ -109,11 +110,22 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                       label: "Técnico",
                       asset: "assets/logo.png",
                       onChanged: (v) => setState(() => role = v),
-                      alignment: Alignment.bottomLeft,
+                      alignment: Alignment.centerLeft,
                     ),
                   ],
                 ),
+              ),
+
+              HeaderActionTile(
+                title: "Iluminación Q1",
+                subTitle: "Salida",
+                textButton: "Probar",
+                onPressed: () {
+
+                },
               )
+
+
 
             ],
           ),

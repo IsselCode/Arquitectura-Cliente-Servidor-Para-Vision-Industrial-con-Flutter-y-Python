@@ -17,7 +17,9 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
+    ThemeData theme = Theme.of(context);
+    TextTheme textTheme = theme.textTheme;
+    ColorScheme colorScheme = theme.colorScheme;
     return FilledButton(
       focusNode: focusNode,
       onPressed: onTap,
@@ -25,7 +27,7 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         minimumSize: Size.fromHeight(height)
       ),
-      child: Text(text, style: textTheme.bodyMedium?.copyWith(color: Colors.white),)
+      child: Text(text, style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.bold),)
     );
   }
 }

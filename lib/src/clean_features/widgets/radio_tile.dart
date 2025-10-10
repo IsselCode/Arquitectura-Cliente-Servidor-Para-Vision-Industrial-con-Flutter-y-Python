@@ -1,24 +1,26 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class RadioCard<T> extends StatelessWidget {
+class RadioTile<T> extends StatelessWidget {
 
   final T value;
   final T? groupValue;
   final String label;
   final String asset;
   final ValueChanged<T>? onChanged; // ← callback
-  final double size;
+  final double height;
   final Color? surfaceColor;
+  final AlignmentGeometry alignment;
 
-  const RadioCard({
+  const RadioTile({
     super.key,
     required this.value,
     required this.label,
     required this.asset,
+    required this.alignment,
     this.groupValue,
     this.onChanged,
-    this.size = 125,
+    this.height = 125,
     this.surfaceColor
   });
 
@@ -31,25 +33,19 @@ class RadioCard<T> extends StatelessWidget {
     return FilledButton(
       onPressed: () => onChanged?.call(value),
       style: FilledButton.styleFrom(
-        minimumSize: Size(size, size),
-        maximumSize: Size(size, size),
+        minimumSize: Size.fromHeight(height),
+        maximumSize: Size.fromHeight(height),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: EdgeInsets.all(10),
         backgroundColor: value == groupValue ? colorScheme.primary : surfaceColor ?? colorScheme.surface
       ),
-      child: Column(
-        spacing: 10,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(asset, fit: BoxFit.contain, height: size * 0.4,),
-          AutoSizeText(
-            label,
-            maxLines: 1,
-            minFontSize: (size * 0.10).roundToDouble(),
-            maxFontSize: (size * 0.15).roundToDouble(),
-            style: textTheme.bodyMedium?.copyWith(fontSize: (size * 0.15).roundToDouble(), color: colorScheme.onSurface),
-          )
-        ],
+      child: Align(
+        alignment: alignment,
+        child: Text(
+          label,
+          maxLines: 1,
+          style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
+        ),
       ),
     );
   }

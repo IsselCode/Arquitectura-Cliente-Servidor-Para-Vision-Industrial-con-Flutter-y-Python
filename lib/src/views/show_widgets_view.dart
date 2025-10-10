@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../clean_features/widgets/radio_card.dart';
@@ -75,6 +76,43 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                     onChanged: (v) => setState(() => role = v)
                   ),
                 ],
+              ),
+
+              SizedBox(
+                height: 170,
+                child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RadioTile(
+                      value: Role.admin,
+                      groupValue: role,
+                      height: 50,
+                      label: "Admin",
+                      asset: "assets/logo.png",
+                      onChanged: (v) => setState(() => role = v),
+                      alignment: Alignment.bottomLeft,
+                    ),
+                    RadioTile(
+                      value: Role.calidad,
+                      groupValue: role,
+                      height: 50,
+                      label: "Calidad",
+                      asset: "assets/logo.png",
+                      onChanged: (v) => setState(() => role = v),
+                      alignment: Alignment.bottomLeft,
+                    ),
+                    RadioTile(
+                      value: Role.tecnico,
+                      groupValue: role,
+                      height: 50,
+                      label: "Técnico",
+                      asset: "assets/logo.png",
+                      onChanged: (v) => setState(() => role = v),
+                      alignment: Alignment.bottomLeft,
+                    ),
+                  ],
+                ),
               )
 
             ],

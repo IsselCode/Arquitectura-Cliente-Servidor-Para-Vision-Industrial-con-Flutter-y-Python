@@ -3,7 +3,6 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/c
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-import '../clean_features/widgets/choice_card_group.dart';
 import '../clean_features/widgets/radio_card.dart';
 
 enum Role {
@@ -47,37 +46,33 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 onTap: () => print("Ingresando"),
               ),
 
-              ChoiceCardGroup<Role>(
-                value: role,
-                onChanged: (v) => setState(() => role = v),
-                size: 100,
+              Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RadioCard(
                     value: Role.admin,
                     groupValue: role,
+                    size: 100,
                     label: "Admin",
                     asset: "assets/logo.png",
-                    onChanged: (p0) {
-                      print(p0);
-                    },
+                    onChanged: (v) => setState(() => role = v)
                   ),
                   RadioCard(
                     value: Role.calidad,
                     groupValue: role,
+                    size: 100,
                     label: "Calidad",
                     asset: "assets/logo.png",
-                    onChanged: (p0) {
-                      print(p0);
-                    },
+                    onChanged: (v) => setState(() => role = v)
                   ),
                   RadioCard(
                     value: Role.tecnico,
                     groupValue: role,
+                    size: 100,
                     label: "Técnico",
                     asset: "assets/logo.png",
-                    onChanged: (p0) {
-                      print(p0);
-                    },
+                    onChanged: (v) => setState(() => role = v)
                   ),
                 ],
               )

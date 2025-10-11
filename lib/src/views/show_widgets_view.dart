@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/stepper_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/tab_switcher.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/header_action_tile.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_tile.dart';
@@ -132,6 +133,15 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 state: (value) {
                   print(value);
                 },
+              ),
+
+              StepperField(
+                title: "Exposición",
+                maxValue: 20,
+                minValue: -10,
+                onChanged: (value) {
+                  print(value);
+                }
               )
 
 

@@ -9,6 +9,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/r
 import 'package:flutter/material.dart';
 
 import '../clean_features/widgets/radio_card.dart';
+import '../clean_features/widgets/toggle_field.dart';
 
 enum Role {
   admin,
@@ -26,6 +27,7 @@ class ShowWidgetsView extends StatefulWidget {
 class _ShowWidgetsViewState extends State<ShowWidgetsView> {
 
   Role? role;
+  bool toggleField = false;
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +150,16 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
               InfoField(
                 title: "Piezas Ok",
                 value: "5"
+              ),
+
+              ToggleField(
+                title: "Luz",
+                value: toggleField,
+                onChanged: (value) {
+                  toggleField = !toggleField;
+                  setState(() {});
+                },
               )
-
-
 
             ],
           ),

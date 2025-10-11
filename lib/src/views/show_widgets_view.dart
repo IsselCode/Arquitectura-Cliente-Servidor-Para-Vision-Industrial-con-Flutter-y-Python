@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/stepper_field.dart';
@@ -29,6 +30,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
 
   Role? role;
   bool toggleField = false;
+  int? dropdownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +168,24 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 icon: Icons.timer_outlined,
                 label: "12s"
               ),
+
+              CustomDropdown<int>(
+                hintText: "Nombre de usuario",
+                items: List.generate(
+                  5,
+                  (index) {
+                    return DropdownMenuItem(
+                      child: Text("Valor $index"),
+                      value: index,
+                    );
+                  },
+                ),
+                value: dropdownValue,
+                onChanged: (p0) {
+                  dropdownValue = p0;
+                  setState(() {});
+                },
+              )
 
             ],
           ),

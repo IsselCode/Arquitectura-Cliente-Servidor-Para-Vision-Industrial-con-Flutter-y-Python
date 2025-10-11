@@ -8,6 +8,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/h
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../clean_features/widgets/info_field_2.dart';
 import '../clean_features/widgets/radio_card.dart';
 import '../clean_features/widgets/toggle_field.dart';
 
@@ -159,7 +160,12 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                   toggleField = !toggleField;
                   setState(() {});
                 },
-              )
+              ),
+
+              InfoField2(
+                icon: Icons.timer_outlined,
+                label: "12s"
+              ),
 
             ],
           ),

@@ -133,7 +133,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 },
               ),
 
-              CustomWidget(
+              TabSwitcher(
                 leftText: "Crear",
                 rightText: "Actualizar",
                 state: (value) {

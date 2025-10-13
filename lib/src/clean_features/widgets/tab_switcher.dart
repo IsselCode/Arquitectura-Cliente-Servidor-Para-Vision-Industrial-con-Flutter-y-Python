@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app/consts.dart';
 
-enum CustomWidgetAlignStates {
+enum TabSwitcherAlignStates {
   left,
   right
 }
 
-class CustomWidget extends StatefulWidget {
+class TabSwitcher extends StatefulWidget {
 
   final double height;
   final String leftText;
   final String rightText;
-  final ValueChanged<CustomWidgetAlignStates> state;
+  final ValueChanged<TabSwitcherAlignStates> state;
   final Color? color;
 
-  const CustomWidget({
+  const TabSwitcher({
     super.key,
     required this.leftText,
     required this.rightText,
@@ -25,26 +25,26 @@ class CustomWidget extends StatefulWidget {
   });
 
   @override
-  State<CustomWidget> createState() => _CustomWidgetState();
+  State<TabSwitcher> createState() => _CustomWidgetState();
 }
 
-class _CustomWidgetState extends State<CustomWidget> with SingleTickerProviderStateMixin {
+class _CustomWidgetState extends State<TabSwitcher> with SingleTickerProviderStateMixin {
 
-  CustomWidgetAlignStates alignState = CustomWidgetAlignStates.left;
+  TabSwitcherAlignStates alignState = TabSwitcherAlignStates.left;
 
   void _toggleMovement() {
 
     if (isLeftAlign()) {
-      alignState = CustomWidgetAlignStates.right;
+      alignState = TabSwitcherAlignStates.right;
     } else {
-      alignState = CustomWidgetAlignStates.left;
+      alignState = TabSwitcherAlignStates.left;
     }
 
     widget.state.call(alignState);
     setState(() {});
   }
 
-  bool isLeftAlign() => alignState == CustomWidgetAlignStates.left;
+  bool isLeftAlign() => alignState == TabSwitcherAlignStates.left;
 
   @override
   Widget build(BuildContext context) {

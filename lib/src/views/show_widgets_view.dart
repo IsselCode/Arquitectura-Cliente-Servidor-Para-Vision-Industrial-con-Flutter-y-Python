@@ -1,3 +1,4 @@
+import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
@@ -43,7 +44,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
             spacing: 10,
             children: [
 
-              AssetContainer(asset: "assets/logo.png"),
+              AssetContainer(asset: AppAssets.logo),
 
               CustomTextFormField(
                 hintText: "Nombre de usuario",
@@ -65,7 +66,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                     groupValue: role,
                     size: 100,
                     label: "Admin",
-                    asset: "assets/logo.png",
+                    asset: AppAssets.logo,
                     onChanged: (v) => setState(() => role = v)
                   ),
                   RadioCard(
@@ -73,7 +74,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                     groupValue: role,
                     size: 100,
                     label: "Calidad",
-                    asset: "assets/logo.png",
+                    asset: AppAssets.logo,
                     onChanged: (v) => setState(() => role = v)
                   ),
                   RadioCard(
@@ -81,7 +82,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                     groupValue: role,
                     size: 100,
                     label: "Técnico",
-                    asset: "assets/logo.png",
+                    asset: AppAssets.logo,
                     onChanged: (v) => setState(() => role = v)
                   ),
                 ],
@@ -98,7 +99,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                       groupValue: role,
                       height: 50,
                       label: "Admin",
-                      asset: "assets/logo.png",
+                      asset: AppAssets.logo,
                       onChanged: (v) => setState(() => role = v),
                       alignment: Alignment.centerLeft,
                     ),
@@ -107,7 +108,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                       groupValue: role,
                       height: 50,
                       label: "Calidad",
-                      asset: "assets/logo.png",
+                      asset: AppAssets.logo,
                       onChanged: (v) => setState(() => role = v),
                       alignment: Alignment.centerLeft,
                     ),
@@ -116,7 +117,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                       groupValue: role,
                       height: 50,
                       label: "Técnico",
-                      asset: "assets/logo.png",
+                      asset: AppAssets.logo,
                       onChanged: (v) => setState(() => role = v),
                       alignment: Alignment.centerLeft,
                     ),

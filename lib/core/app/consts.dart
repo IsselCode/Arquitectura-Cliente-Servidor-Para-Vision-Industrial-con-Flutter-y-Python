@@ -9,6 +9,7 @@ class AppAssets {
   static const _baseImages = "assets/images";
 
   static const logo = "$_baseImages/logo.png";
+  static const logoText = "$_baseImages/logo_text.png";
 
 }
 

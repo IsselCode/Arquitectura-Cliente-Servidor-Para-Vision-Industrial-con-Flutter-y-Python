@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/theme.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/show_widgets_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/splash_screen_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,8 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: darkTheme,
-      home: ShowWidgetsView(),
+      theme: lightTheme,
+      home: SplashScreenView(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/service_loader.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
@@ -46,7 +47,12 @@ class LoginView extends StatelessWidget {
 }
 
 class _Form extends StatelessWidget {
-  const _Form({super.key});
+
+  _Form({super.key});
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,54 +60,48 @@ class _Form extends StatelessWidget {
     ColorScheme colorScheme = theme.colorScheme;
     TextTheme textTheme = theme.textTheme;
 
-    return Column(
-      spacing: 10,
-      children: [
+    return Form(
+      key: formKey,
+      child: Column(
+        spacing: 10,
+        children: [
 
-        // FloatOnTapTextField(
-        //   controller: TextEditingController(),
-        //   hintText: "Nombre de usuario",
-        //   prefixIcon: Icons.person_outline,
-        //   fillColor: theme.scaffoldBackgroundColor,
-        //   obscureText: false,
-        //   compactDisplayBuilder: (ctx, controller, openOverlay) {
-        //     return CustomTextFormField(
-        //       controller: controller,
-        //       onTap: openOverlay,
-        //       readOnly: true,
-        //       hintText: "Nombre de usuario",
-        //       prefixIcon: Icons.person_outline,
-        //       fillColor: theme.scaffoldBackgroundColor,
-        //       obscureText: true,
-        //     );
-        //   },
-        // ),
+          FloatOnTapTextField(
+            controller: userName,
+            hintText: "Nombre de usuario",
+            prefixIcon: Icons.person_outline,
+            fillColor: theme.scaffoldBackgroundColor,
+          ),
 
-        CustomTextFormField(
-          controller: TextEditingController(),
-          hintText: "Usuario",
-          prefixIcon: Icons.person_outline,
-          fillColor: theme.scaffoldBackgroundColor,
-        ),
+          FloatOnTapTextField(
+            controller: password,
+            hintText: "Contraseña",
+            prefixIcon: Icons.lock_outline,
+            fillColor: theme.scaffoldBackgroundColor,
+            obscureText: true,
+          ),
 
-        CustomTextFormField(
-          controller: TextEditingController(),
-          hintText: "Contraseña",
-          prefixIcon: Icons.lock_outline,
-          fillColor: theme.scaffoldBackgroundColor,
-          obscureText: true,
-        ),
+          const SizedBox(height: 10,),
 
-        const SizedBox(height: 10,),
-        
-        CustomButton(
-          text: "Ingresar",
-          onTap: () {
-            print("Ingresar");
-          },
-        )
+          CustomButton(
+            text: "Ingresar",
+            onTap: () => cta(context),
+          )
 
-      ],
+        ],
+      ),
     );
   }
+
+  cta(BuildContext context) async {
+
+    bool? result = await ServiceLoader.loader<bool>(
+      context: context,
+      future: Future.delayed(const Duration(milliseconds: 500), () => false,)
+    );
+
+    print(result);
+
+  }
+
 }

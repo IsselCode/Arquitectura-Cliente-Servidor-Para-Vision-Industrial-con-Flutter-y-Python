@@ -12,10 +12,12 @@ class CustomTextFormField extends FormField<String> {
   final double height;
   final bool readOnly;
   final VoidCallback? onTap;
+  final void Function(String)? onSubmitted;
 
   CustomTextFormField({
     super.key,
     this.controller,
+    this.onSubmitted,
     this.onTap,
     this.readOnly = false,
     this.autofocus = false,
@@ -55,6 +57,7 @@ class CustomTextFormField extends FormField<String> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
+                    onSubmitted: onSubmitted,
                     onTap: onTap,
                     readOnly: readOnly,
                     controller: controller,
@@ -109,5 +112,5 @@ class CustomTextFormField extends FormField<String> {
 }
 
 class _CustomTextFormFieldState extends FormFieldState<String> {
-  bool showPassword = false;
+  bool showPassword = true;
 }

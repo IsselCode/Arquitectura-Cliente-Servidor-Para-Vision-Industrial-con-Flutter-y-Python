@@ -10,10 +10,14 @@ class CustomTextFormField extends FormField<String> {
   final bool obscureText;
   final IconData prefixIcon;
   final double height;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
   CustomTextFormField({
     super.key,
     this.controller,
+    this.onTap,
+    this.readOnly = false,
     this.autofocus = false,
     this.focusNode,
     required this.hintText,
@@ -51,6 +55,8 @@ class CustomTextFormField extends FormField<String> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
+                    onTap: onTap,
+                    readOnly: readOnly,
                     controller: controller,
                     autofocus: autofocus,
                     focusNode: focusNode,

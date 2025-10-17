@@ -5,12 +5,14 @@ class AssetContainer extends StatelessWidget {
   final double height;
   final double width;
   final String asset;
+  final Color? color;
 
   const AssetContainer({
     super.key,
     required this.asset,
     this.height = 80,
-    this.width = 80
+    this.width = 80,
+    this.color,
   });
 
   @override
@@ -21,7 +23,7 @@ class AssetContainer extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: color ?? colorScheme.surface,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(

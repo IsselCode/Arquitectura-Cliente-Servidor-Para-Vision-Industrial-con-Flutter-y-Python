@@ -3,15 +3,15 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreenView extends StatefulWidget {
+class SplashView extends StatefulWidget {
 
-  const SplashScreenView({super.key,});
+  const SplashView({super.key,});
 
   @override
-  State<SplashScreenView> createState() => _SplashScreenViewState();
+  State<SplashView> createState() => _SplashScreenViewState();
 }
 
-class _SplashScreenViewState extends State<SplashScreenView> with TickerProviderStateMixin {
+class _SplashScreenViewState extends State<SplashView> with TickerProviderStateMixin {
   late final AnimationController _circleCtrl;
   late final AnimationController _textCtrl;
   late final Animation<double> _circleAnim;
@@ -29,6 +29,7 @@ class _SplashScreenViewState extends State<SplashScreenView> with TickerProvider
       vsync: this,
       duration: circleDuration,
     );
+
     _circleAnim = CurvedAnimation(
       parent: _circleCtrl,
       curve: Curves.easeOutCubic,

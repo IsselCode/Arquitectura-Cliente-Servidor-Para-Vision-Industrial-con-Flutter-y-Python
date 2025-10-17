@@ -10,6 +10,13 @@ class AppAssets {
 
   static const logo = "$_baseImages/logo.png";
   static const logoText = "$_baseImages/logo_text.png";
+  static const configuracion = "$_baseImages/configuracion.png";
+  static const correcto = "$_baseImages/correcto.png";
+  static const db = "$_baseImages/db.png";
+  static const pieza = "$_baseImages/pieza.png";
+  static const servidor = "$_baseImages/servidor.png";
+  static const trazabilidad = "$_baseImages/trazabilidad.png";
+  static const usuarios = "$_baseImages/usuarios.png";
 
 }
 

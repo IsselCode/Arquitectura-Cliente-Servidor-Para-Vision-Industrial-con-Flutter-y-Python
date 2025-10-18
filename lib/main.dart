@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/theme.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/device_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/theme_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,13 +22,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-       ChangeNotifierProvider(create: (context) => locator<DeviceController>(),)
+       ChangeNotifierProvider(create: (context) => locator<DeviceController>(),),
+       ChangeNotifierProvider(create: (context) => locator<ThemeController>(),)
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: lightTheme,
-        home: SplashView(),
+      child: Consumer<ThemeController>(
+        builder: (context, value, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: value.isDark ? darkTheme : lightTheme,
+            home: SplashView(),
+          );
+        },
       ),
     );
   }

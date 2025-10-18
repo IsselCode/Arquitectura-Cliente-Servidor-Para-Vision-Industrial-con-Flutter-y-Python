@@ -1,3 +1,4 @@
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_toggle.dart';
 import 'package:flutter/material.dart';
 
 class ToggleField extends StatelessWidget {
@@ -25,10 +26,6 @@ class ToggleField extends StatelessWidget {
     ColorScheme colorScheme = theme.colorScheme;
     TextTheme textTheme = theme.textTheme;
 
-    final double switchHeight = height * 0.65;
-    final double thumbMargin = 4;
-    final double thumbSize = switchHeight - thumbMargin * 2;
-
     return Container(
       height: height,
       width: double.infinity,
@@ -47,31 +44,13 @@ class ToggleField extends StatelessWidget {
           ),
 
           // Switch
-          InkWell(
-            onTap: () => onChanged(!value),
-            child: Container(
-              height: switchHeight,
-              width: width,
-              padding: EdgeInsets.all(thumbMargin),
-              decoration: BoxDecoration(
-                color: backColor ?? theme.scaffoldBackgroundColor,
-                borderRadius: BorderRadius.circular(height * 0.5)
-              ),
-              child: AnimatedAlign(
-                alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.fastOutSlowIn,
-                child: Container(
-                  height: thumbSize,
-                  width: thumbSize,
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary,
-                    shape: BoxShape.circle
-                  ),
-                ),
-              ),
-            ),
-          ),
+          CustomToggle(
+            onChanged: onChanged,
+            value: value,
+            height: height,
+            width: width,
+            backColor: backColor,
+          )
 
         ],
       ),

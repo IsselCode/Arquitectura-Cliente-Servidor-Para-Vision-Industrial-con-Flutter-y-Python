@@ -6,11 +6,13 @@ class CustomButton extends StatelessWidget {
   final double height;
   final VoidCallback onTap;
   final FocusNode? focusNode;
+  final Color? color;
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onTap,
+    this.color,
     this.focusNode,
     this.height = 60
   });
@@ -25,7 +27,8 @@ class CustomButton extends StatelessWidget {
       onPressed: onTap,
       style: FilledButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: Size.fromHeight(height)
+        minimumSize: Size.fromHeight(height),
+        backgroundColor: color
       ),
       child: Text(text, style: textTheme.bodyMedium?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.bold),)
     );

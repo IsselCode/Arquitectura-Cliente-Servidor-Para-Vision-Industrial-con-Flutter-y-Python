@@ -1,5 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +62,6 @@ class _ScanDevicesViewState extends State<ScanDevicesView> {
                     clipBehavior: Clip.none,
                     children: [
 
-                      // t: 0 -> fuera; 1 -> adentro
                       Positioned(
                         top: 0,
                         bottom: 0,
@@ -114,8 +115,26 @@ class _RightPanel extends StatelessWidget {
     }
 
     if (devices.isEmpty) {
-      return const Center(
-        child: Text('Sin dispositivos', style: TextStyle(fontSize: 16)),
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 25,
+          children: [
+            Text('Sin dispositivos', style: TextStyle(fontSize: 16)),
+            SizedBox(
+              width: 250,
+              child: CustomButton(
+                text: "Reintentar",
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => ScanDevicesView(),)
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       );
     }
 

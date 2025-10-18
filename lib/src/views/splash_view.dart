@@ -85,7 +85,7 @@ class _SplashScreenViewState extends State<SplashView> with TickerProviderStateM
                 child: CustomPaint(
                   size: Size.infinite,
                   painter: _CenterCirclePainter(
-                    color: colorScheme.onPrimary,
+                    color: theme.scaffoldBackgroundColor,
                     radius: radius,
                   ),
                 ),

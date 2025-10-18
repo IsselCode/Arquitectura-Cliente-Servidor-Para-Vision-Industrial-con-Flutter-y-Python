@@ -1,4 +1,5 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_toggle.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/theme_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/database_selecion_view.dart';
@@ -61,26 +62,32 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         //* Configuración y evaluación
-                        _ActionBox(
-                          image: AppAssets.configuracion,
-                          text: "Configuración y evaluación",
+                        ActionBox(
+                          asset: AppAssets.configuracion,
+                          title: "Configuración y evaluación",
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => DatabaseSelecionView(),));
                           },
+                          width: 300,
+                          height: 300,
                         ),
-                        _ActionBox(
-                          image: AppAssets.trazabilidad,
-                          text: "Trazabilidad",
+                        ActionBox(
+                          asset: AppAssets.trazabilidad,
+                          title: "Trazabilidad",
                           onTap: () {
                             print("navegando");
                           },
+                          width: 300,
+                          height: 300,
                         ),
-                        _ActionBox(
-                          image: AppAssets.usuarios,
-                          text: "Gestionar Usuarios",
+                        ActionBox(
+                          asset: AppAssets.usuarios,
+                          title: "Gestionar Usuarios",
                           onTap: () {
                             print("navegando");
                           },
+                          width: 300,
+                          height: 300,
                         )
                       ],
                     )
@@ -91,58 +98,6 @@ class HomeView extends StatelessWidget {
           ),
         ),
       )
-    );
-  }
-}
-
-class _ActionBox extends StatelessWidget {
-
-  final String image;
-  final String text;
-  final VoidCallback onTap;
-
-  const _ActionBox({
-    super.key,
-    required this.image,
-    required this.text,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    ColorScheme colorScheme = theme.colorScheme;
-    TextTheme textTheme = theme.textTheme;
-
-
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(24),
-      clipBehavior: Clip.antiAlias,
-      child: InkResponse(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
-        child: Ink(
-          padding: EdgeInsets.all(20),
-          height: 350,
-          width: 350,
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(24)
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 40,
-            children: [
-              Image.asset(image, height: 128, width: 128,),
-              SizedBox(
-                height: 70,
-                child: Center(child: Text(text, style: textTheme.titleLarge, textAlign: TextAlign.center,))
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

@@ -7,12 +7,14 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final FocusNode? focusNode;
   final Color? color;
+  final Color? textColor;
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onTap,
     this.color,
+    this.textColor,
     this.focusNode,
     this.height = 60
   });
@@ -30,7 +32,7 @@ class CustomButton extends StatelessWidget {
         minimumSize: Size.fromHeight(height),
         backgroundColor: color
       ),
-      child: Text(text, style: textTheme.bodyMedium?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.bold),)
+      child: Text(text, style: textTheme.bodyMedium?.copyWith(color: textColor ?? colorScheme.onPrimary, fontWeight: FontWeight.bold),)
     );
   }
 }

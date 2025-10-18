@@ -1,4 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/config_eval_dialog.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_carousel.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +23,6 @@ class DatabaseSelecionView extends StatelessWidget {
             children: [
               Text("¿Qué quieres hacer hoy?", style: textTheme.displayLarge),
 
-            // En tu build:
             CustomCarousel(
               height: 300,
               itemCount: 5,
@@ -31,14 +32,16 @@ class DatabaseSelecionView extends StatelessWidget {
               unselectedScale: 2/3,
               onChanged: (i) => debugPrint('Seleccionado: $i'),
               itemBuilder: (context, index, isSelected) {
+                print(isSelected);
                 return GestureDetector(
                   onTap: () => debugPrint('Tap $index'),
-                  child: _ActionBox(
-                    image: AppAssets.db,
-                    text: "index",
-                    onTap: () {
-                      print(index);
-                    },
+                  child: ActionBox(
+                    asset: AppAssets.db,
+                    title: "index ${index}",
+                    height: 300,
+                    width: 300,
+                    onTap: () => showDialog(context: context, builder: (context) => ConfigEvalDialog(),),
+                    onDeleteTap: () => print("Eliminando"),
                     color: colorScheme.surface
                   ),
                 );

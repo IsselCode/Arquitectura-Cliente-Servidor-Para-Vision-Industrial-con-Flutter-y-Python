@@ -5,8 +5,8 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/c
 import 'package:flutter/material.dart';
 
 
-class DatabaseSelecionView extends StatelessWidget {
-  const DatabaseSelecionView({super.key});
+class DatabaseSelectionView extends StatelessWidget {
+  const DatabaseSelectionView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,6 @@ class DatabaseSelecionView extends StatelessWidget {
               unselectedScale: 2/3,
               onChanged: (i) => debugPrint('Seleccionado: $i'),
               itemBuilder: (context, index, isSelected) {
-                print(isSelected);
                 return GestureDetector(
                   onTap: () => debugPrint('Tap $index'),
                   child: ActionBox(
@@ -41,7 +40,7 @@ class DatabaseSelecionView extends StatelessWidget {
                     height: 300,
                     width: 300,
                     onTap: () => showDialog(context: context, builder: (context) => ConfigEvalDialog(),),
-                    onDeleteTap: () => print("Eliminando"),
+                    onDeleteTap: isSelected ? () => print("Eliminando") : null,
                     color: colorScheme.surface
                   ),
                 );

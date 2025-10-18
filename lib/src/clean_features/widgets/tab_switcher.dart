@@ -9,17 +9,19 @@ enum TabSwitcherAlignStates {
 
 class TabSwitcher extends StatefulWidget {
 
+  final TabSwitcherAlignStates state;
   final double height;
   final String leftText;
   final String rightText;
-  final ValueChanged<TabSwitcherAlignStates> state;
+  final ValueChanged<TabSwitcherAlignStates> onChanged;
   final Color? color;
 
   const TabSwitcher({
     super.key,
+    required this.state,
     required this.leftText,
     required this.rightText,
-    required this.state,
+    required this.onChanged,
     this.height = 50,
     this.color,
   });
@@ -30,21 +32,26 @@ class TabSwitcher extends StatefulWidget {
 
 class _CustomWidgetState extends State<TabSwitcher> with SingleTickerProviderStateMixin {
 
-  TabSwitcherAlignStates alignState = TabSwitcherAlignStates.left;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _toggleMovement() {
 
+    TabSwitcherAlignStates? newState;
+
     if (isLeftAlign()) {
-      alignState = TabSwitcherAlignStates.right;
+      newState = TabSwitcherAlignStates.right;
     } else {
-      alignState = TabSwitcherAlignStates.left;
+      newState = TabSwitcherAlignStates.left;
     }
 
-    widget.state.call(alignState);
+    widget.onChanged.call(newState);
     setState(() {});
   }
 
-  bool isLeftAlign() => alignState == TabSwitcherAlignStates.left;
+  bool isLeftAlign() => widget.state == TabSwitcherAlignStates.left;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +97,7 @@ class _CustomWidgetState extends State<TabSwitcher> with SingleTickerProviderSta
                         child: Text(
                           widget.leftText,
                           style: textTheme.bodyMedium?.copyWith(
-                            color: isLeftAlign() ? null : AppColors.grey,
+                            color: isLeftAlign() ? colorScheme.onPrimary : AppColors.grey,
                             fontWeight: isLeftAlign() ? FontWeight.bold : FontWeight.normal
                           ),
                         )
@@ -101,7 +108,7 @@ class _CustomWidgetState extends State<TabSwitcher> with SingleTickerProviderSta
                         child: Text(
                           widget.rightText,
                           style: textTheme.bodyMedium?.copyWith(
-                            color: isLeftAlign() ? AppColors.grey : null,
+                            color: isLeftAlign() ? AppColors.grey : colorScheme.onPrimary,
                             fontWeight: isLeftAlign() ? FontWeight.normal : FontWeight.bold,
                           ),
                         )

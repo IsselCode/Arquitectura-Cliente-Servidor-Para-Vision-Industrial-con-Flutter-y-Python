@@ -137,9 +137,10 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
               TabSwitcher(
                 leftText: "Crear",
                 rightText: "Actualizar",
-                state: (value) {
+                onChanged: (value) {
                   print(value);
                 },
+                state: TabSwitcherAlignStates.left,
               ),
 
               StepperField(

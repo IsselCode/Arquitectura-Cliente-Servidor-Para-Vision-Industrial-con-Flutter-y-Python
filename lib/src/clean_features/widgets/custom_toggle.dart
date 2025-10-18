@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/app/consts.dart';
+
 class CustomToggle extends StatelessWidget {
 
   final bool value;
@@ -35,8 +37,8 @@ class CustomToggle extends StatelessWidget {
         width: width,
         padding: EdgeInsets.all(thumbMargin),
         decoration: BoxDecoration(
-            color: backColor ?? theme.scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(height * 0.5)
+          color: backColor ?? theme.scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(height * 0.5)
         ),
         child: AnimatedAlign(
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,
@@ -46,8 +48,8 @@ class CustomToggle extends StatelessWidget {
             height: thumbSize,
             width: thumbSize,
             decoration: BoxDecoration(
-                color: colorScheme.primary,
-                shape: BoxShape.circle
+              color: value ? colorScheme.primary : AppColors.grey,
+              shape: BoxShape.circle
             ),
           ),
         ),

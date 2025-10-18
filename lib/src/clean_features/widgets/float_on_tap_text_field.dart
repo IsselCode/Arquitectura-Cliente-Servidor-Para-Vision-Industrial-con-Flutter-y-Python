@@ -78,6 +78,7 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
           child: CustomTextFormField(
             controller: widget.controller,
             onTap: _openOverlay,
+            height: widget.height,
             readOnly: true,
             hintText: widget.hintText,
             prefixIcon: widget.prefixIcon,
@@ -174,10 +175,12 @@ class _FloatingEditorRouteState extends State<_FloatingEditorRoute> {
               top: top,
               left: left,
               width: targetW,
+              height: widget.height + 20,
               child: Hero(
                 tag: widget.heroTag,
                 child: CustomTextFormField(
                   controller: _controller,
+                  height: widget.height,
                   hintText: widget.hintText,
                   prefixIcon: widget.prefixIcon,
                   focusNode: _focusNode,

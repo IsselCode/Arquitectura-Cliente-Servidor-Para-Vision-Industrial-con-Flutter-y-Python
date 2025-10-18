@@ -4,6 +4,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/a
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/scan_devices_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -97,10 +98,10 @@ class _Form extends StatelessWidget {
 
     bool? result = await ServiceLoader.loader<bool>(
       context: context,
-      future: Future.delayed(const Duration(milliseconds: 500), () => false,)
+      future: Future.delayed(const Duration(milliseconds: 500),)
     );
 
-    print(result);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ScanDevicesView(),));
 
   }
 

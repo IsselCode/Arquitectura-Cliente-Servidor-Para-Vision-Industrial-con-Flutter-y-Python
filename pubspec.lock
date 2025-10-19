@@ -25,6 +25,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  bbox_editor:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "0628d3c5ec9b48d7ee84f6c88c93867b2974fffd"
+      url: "https://github.com/IsselCode/bbox_editor"
+    source: git
+    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -203,6 +212,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
+  mjpeg_stream:
+    dependency: transitive
+    description:
+      name: mjpeg_stream
+      sha256: "426ff163c08021792f4c8c3bbaae16106d821c7559e8b8b99b8c6c14fb2c6058"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   nested:
     dependency: transitive
     description:

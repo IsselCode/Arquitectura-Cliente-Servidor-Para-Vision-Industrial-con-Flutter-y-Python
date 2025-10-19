@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../clean_features/entities/device_entity.dart';
-import '../models/device_model.dart';
+import '../../clean_features/entities/device_entity.dart';
+import '../../models/device_model.dart';
 
 class DeviceController extends ChangeNotifier {
 

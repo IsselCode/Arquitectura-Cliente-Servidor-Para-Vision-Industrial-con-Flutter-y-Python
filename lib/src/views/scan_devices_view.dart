@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../clean_features/entities/device_entity.dart';
 import '../clean_features/widgets/scan_pulse_button.dart';
-import '../controller/device_controller.dart';
+import '../controller/logic/device_controller.dart';
 
 class ScanDevicesView extends StatefulWidget {
   const ScanDevicesView({super.key});

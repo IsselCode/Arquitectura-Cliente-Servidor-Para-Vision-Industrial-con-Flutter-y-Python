@@ -46,7 +46,7 @@ class ConfigEvalDialog extends StatelessWidget {
                   height: 128,
                   width: 128,
                   color: theme.scaffoldBackgroundColor,
-                  onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ConfigMachineView(),)),
+                  onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ConfigMachineView.init(),)),
                 ),
                 ActionBox(
                   asset: AppAssets.configuracion,

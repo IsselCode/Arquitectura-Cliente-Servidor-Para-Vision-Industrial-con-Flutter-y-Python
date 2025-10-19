@@ -1,11 +1,12 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_toggle.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/theme_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/database_selection_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../controller/logic/theme_controller.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});

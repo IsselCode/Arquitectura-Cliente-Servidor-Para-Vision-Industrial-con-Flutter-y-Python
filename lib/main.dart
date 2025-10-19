@@ -1,11 +1,12 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/theme.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/device_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/theme_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'inject_container.dart';
+import 'src/controller/logic/theme_controller.dart';
 
 void main() async {
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+       ChangeNotifierProvider(create: (context) => locator<CameraController>(),),
        ChangeNotifierProvider(create: (context) => locator<DeviceController>(),),
        ChangeNotifierProvider(create: (context) => locator<ThemeController>(),)
       ],

@@ -6,6 +6,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/h
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/stepper_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/tab_switcher.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/toggle_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/ui/config_machine_ctrl.dart';
 import 'package:bbox_editor/bbox_editor.dart';
@@ -57,6 +58,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
           child: Row(
             spacing: 50,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //! Left Panel
               SizedBox(
@@ -100,49 +102,56 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
 
               //! Right Panel
               Expanded(
-                child: FutureBuilder(
-                  future: _startFuture,
-                  builder: (context, snapshot) {
+                child: Stack(
+                  children: [
+                    TextBackButton(),
+                    FutureBuilder(
+                      future: _startFuture,
+                      builder: (context, snapshot) {
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator(),);
-                    }
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator(),);
+                        }
 
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: Stack(
-                        children: [
-
-                          BBoxEditor(
-                            camResolution: Size(1920, 1080),
-                            controller: configMachineCtrl.bBoxEditorController,
-                            logs: false,
-                            image: configMachineCtrl.image,
-                          ),
-
-                          Positioned(
-                            right: 10,
-                            bottom: 10,
-                            child: FloatingActionButton(
-                              onPressed: () async {
-                                if (configMachineCtrl.bBoxEditorController.bBoxTool.value == BBoxTool.zoom){
-                                  configMachineCtrl.bBoxEditorController.setTool(BBoxTool.bboxs);
-                                } else {
-                                  configMachineCtrl.bBoxEditorController.setTool(BBoxTool.zoom);
-                                }
-                                setState(() {});
-                              },
-                              child: Icon(configMachineCtrl.bBoxEditorController.bBoxTool.value == BBoxTool.zoom ? Icons.zoom_out_map_outlined : Icons.edit_outlined),
+                        return Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: colorScheme.surface,
+                                borderRadius: BorderRadius.circular(8)
                             ),
-                          )
-                        ],
-                      ),
-                    );
+                            child: Stack(
+                              children: [
 
-                  },
+                                BBoxEditor(
+                                  camResolution: Size(1920, 1080),
+                                  controller: configMachineCtrl.bBoxEditorController,
+                                  logs: false,
+                                  image: configMachineCtrl.image,
+                                ),
+
+                                Positioned(
+                                  right: 10,
+                                  bottom: 10,
+                                  child: FloatingActionButton(
+                                    onPressed: () async {
+                                      if (configMachineCtrl.bBoxEditorController.bBoxTool.value == BBoxTool.zoom){
+                                        configMachineCtrl.bBoxEditorController.setTool(BBoxTool.bboxs);
+                                      } else {
+                                        configMachineCtrl.bBoxEditorController.setTool(BBoxTool.zoom);
+                                      }
+                                      setState(() {});
+                                    },
+                                    child: Icon(configMachineCtrl.bBoxEditorController.bBoxTool.value == BBoxTool.zoom ? Icons.zoom_out_map_outlined : Icons.edit_outlined),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+
+                      },
+                    )
+                  ],
                 ),
               )
             ],

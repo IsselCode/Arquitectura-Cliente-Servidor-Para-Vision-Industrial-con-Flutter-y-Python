@@ -2,6 +2,7 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/config_eval_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_carousel.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
 import 'package:flutter/material.dart';
 
 
@@ -17,36 +18,41 @@ class DatabaseSelectionView extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 100,
+          child: Stack(
             children: [
-              Text("¿Qué quieres hacer hoy?", style: textTheme.displayLarge),
+              TextBackButton(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 100,
+                children: [
+                  Text("Selecciona una base de datos", style: textTheme.displayLarge),
 
-            CustomCarousel(
-              height: 300,
-              itemCount: 5,
-              initialIndex: 2,
-              viewportFraction: 0.25,
-              selectedScale: 1.0,
-              unselectedScale: 2/3,
-              onChanged: (i) => debugPrint('Seleccionado: $i'),
-              itemBuilder: (context, index, isSelected) {
-                return GestureDetector(
-                  onTap: () => debugPrint('Tap $index'),
-                  child: ActionBox(
-                    asset: AppAssets.db,
-                    title: "index ${index}",
+                  CustomCarousel(
                     height: 300,
-                    width: 300,
-                    onTap: () => showDialog(context: context, builder: (context) => ConfigEvalDialog(),),
-                    onDeleteTap: isSelected ? () => print("Eliminando") : null,
-                    color: colorScheme.surface
-                  ),
-                );
-              },
-            )
+                    itemCount: 5,
+                    initialIndex: 2,
+                    viewportFraction: 0.25,
+                    selectedScale: 1.0,
+                    unselectedScale: 2/3,
+                    onChanged: (i) => debugPrint('Seleccionado: $i'),
+                    itemBuilder: (context, index, isSelected) {
+                      return GestureDetector(
+                        onTap: () => debugPrint('Tap $index'),
+                        child: ActionBox(
+                            asset: AppAssets.db,
+                            title: "index ${index}",
+                            height: 300,
+                            width: 300,
+                            onTap: () => showDialog(context: context, builder: (context) => ConfigEvalDialog(),),
+                            onDeleteTap: isSelected ? () => print("Eliminando") : null,
+                            color: colorScheme.surface
+                        ),
+                      );
+                    },
+                  )
 
+                ],
+              )
             ],
           ),
         ),

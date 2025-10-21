@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/theme.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: value.isDark ? darkTheme : lightTheme,
-            home: SplashView(),
+            home: HomeView(),
           );
         },
       ),

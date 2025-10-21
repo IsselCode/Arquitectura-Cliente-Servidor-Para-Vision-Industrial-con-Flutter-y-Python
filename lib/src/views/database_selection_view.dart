@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/config_eval_dialog.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/delete_db_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_carousel.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
@@ -44,7 +45,14 @@ class DatabaseSelectionView extends StatelessWidget {
                             height: 300,
                             width: 300,
                             onTap: () => showDialog(context: context, builder: (context) => ConfigEvalDialog(),),
-                            onDeleteTap: isSelected ? () => print("Eliminando") : null,
+                            onDeleteTap: isSelected ? () async {
+                              bool? result = await showDialog(
+                                context: context,
+                                builder: (context) => DeleteDBDialog(),
+                              );
+
+                              print(result);
+                            } : null,
                             color: colorScheme.surface
                         ),
                       );

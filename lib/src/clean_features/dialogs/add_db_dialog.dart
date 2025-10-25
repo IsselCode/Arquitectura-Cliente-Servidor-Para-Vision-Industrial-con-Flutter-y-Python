@@ -1,12 +1,9 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
 import 'package:flutter/material.dart';
+// :)
 
 class AddDBDialog extends StatelessWidget {
 

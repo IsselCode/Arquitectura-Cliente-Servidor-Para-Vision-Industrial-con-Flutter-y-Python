@@ -9,7 +9,6 @@ import 'inject_container.dart';
 import 'src/controller/logic/theme_controller.dart';
 
 void main() async {
-
   await injectContainer();
 
   runApp(const MyApp());

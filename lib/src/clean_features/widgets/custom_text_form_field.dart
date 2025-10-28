@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends FormField<String> {
   final TextEditingController? controller;
@@ -13,12 +14,14 @@ class CustomTextFormField extends FormField<String> {
   final bool readOnly;
   final VoidCallback? onTap;
   final void Function(String)? onSubmitted;
+  final List<TextInputFormatter>? inputFormatters;
 
   CustomTextFormField({
     super.key,
     this.controller,
     this.onSubmitted,
     this.onTap,
+    this.inputFormatters,
     this.readOnly = false,
     this.autofocus = false,
     this.focusNode,
@@ -57,6 +60,7 @@ class CustomTextFormField extends FormField<String> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
+                    inputFormatters: inputFormatters,
                     onSubmitted: onSubmitted,
                     onTap: onTap,
                     readOnly: readOnly,

@@ -1,8 +1,10 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/finish_process_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field_2.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
+
 import 'package:flutter/material.dart';
 
 class EvalView extends StatelessWidget {
@@ -113,7 +115,14 @@ class EvalView extends StatelessWidget {
         CustomButton(
           text: "Terminar proceso",
           color: Colors.red,
-          onTap: () => print("Terminando proceso"),
+          onTap: () async {
+            bool? result = await showDialog(
+              context: context,
+              builder: (context) => FinishProcessDialog(),
+            );
+
+            print(result);
+          },
         )
       ],
     );

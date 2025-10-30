@@ -46,50 +46,53 @@ class CustomTextFormField extends FormField<String> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            height: height,
-            decoration: BoxDecoration(
-              color: fillColor ?? colorScheme.surface,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            // Layout manual para evitar expansión del InputDecorator
-            child: Row(
-              children: [
-                const SizedBox(width: 8),
-                Icon(prefixIcon, color: AppColors.grey),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    inputFormatters: inputFormatters,
-                    onSubmitted: onSubmitted,
-                    onTap: onTap,
-                    readOnly: readOnly,
-                    controller: controller,
-                    autofocus: autofocus,
-                    focusNode: focusNode,
-                    obscureText: obscureText && s.showPassword,
-                    onChanged: state.didChange, // integra con el Form
-                    maxLines: 1,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration.collapsed(
-                      hintText: hintText,
-                      hintStyle: textTheme.bodyMedium?.copyWith(
-                        color: AppColors.grey,
+          GestureDetector(
+            onTap: () => FocusScope.of(state.context).requestFocus(s._focusNode),
+            child: Container(
+              height: height,
+              decoration: BoxDecoration(
+                color: fillColor ?? colorScheme.surface,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              // Layout manual para evitar expansión del InputDecorator
+              child: Row(
+                children: [
+                  const SizedBox(width: 8),
+                  Icon(prefixIcon, color: AppColors.grey),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      inputFormatters: inputFormatters,
+                      onSubmitted: onSubmitted,
+                      onTap: onTap,
+                      readOnly: readOnly,
+                      controller: controller,
+                      autofocus: autofocus,
+                      focusNode: s._focusNode,
+                      obscureText: obscureText && s.showPassword,
+                      onChanged: state.didChange, // integra con el Form
+                      maxLines: 1,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration.collapsed(
+                        hintText: hintText,
+                        hintStyle: textTheme.bodyMedium?.copyWith(
+                          color: AppColors.grey,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                if (obscureText)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: IconButton(
-                      constraints: BoxConstraints(maxWidth: 48, maxHeight: 48),
-                      onPressed: () => state.setState(() {s.showPassword = !s.showPassword;}),
-                      icon: const Icon(Icons.remove_red_eye_outlined, color: AppColors.grey,),
+                  if (obscureText)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: IconButton(
+                        constraints: BoxConstraints(maxWidth: 48, maxHeight: 48),
+                        onPressed: () => state.setState(() {s.showPassword = !s.showPassword;}),
+                        icon: const Icon(Icons.remove_red_eye_outlined, color: AppColors.grey,),
+                      ),
                     ),
-                  ),
-                // const SizedBox(width: 8),
-              ],
+                  // const SizedBox(width: 8),
+                ],
+              ),
             ),
           ),
 
@@ -117,4 +120,20 @@ class CustomTextFormField extends FormField<String> {
 
 class _CustomTextFormFieldState extends FormFieldState<String> {
   bool showPassword = true;
+  late FocusNode _focusNode;
+
+  @override
+  CustomTextFormField get widget => super.widget as CustomTextFormField;
+
+  @override
+  void initState() {
+    super.initState();
+    // FocusNode: usar el externo o crear uno propio
+    if (widget.focusNode != null) {
+      _focusNode = widget.focusNode!;
+    } else {
+      _focusNode = FocusNode();
+    }
+  }
+
 }

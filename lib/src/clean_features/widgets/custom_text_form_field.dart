@@ -47,7 +47,10 @@ class CustomTextFormField extends FormField<String> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           GestureDetector(
-            onTap: () => FocusScope.of(state.context).requestFocus(s._focusNode),
+            onTap: () {
+              FocusScope.of(state.context).requestFocus(s._focusNode);
+              onTap?.call();
+            },
             child: Container(
               height: height,
               decoration: BoxDecoration(

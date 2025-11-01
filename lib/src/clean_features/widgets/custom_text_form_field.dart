@@ -42,6 +42,13 @@ class CustomTextFormField extends FormField<String> {
 
       final s = state as _CustomTextFormFieldState;
 
+      final ctrl = controller ?? TextEditingController(text: state.value ?? '');
+      ctrl.addListener(() {
+        if (state.value != ctrl.text) {
+          state.didChange(ctrl.text);
+        }
+      });
+
       return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

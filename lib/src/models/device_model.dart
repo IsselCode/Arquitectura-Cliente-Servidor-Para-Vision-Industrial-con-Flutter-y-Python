@@ -16,13 +16,16 @@ class DeviceModel {
         final resolved = await resolve(service);
         final host = resolved.host;   // puede ser hostname; nsd resuelve IP internamente
         final port = resolved.port ?? 80;
-        final Map<String, String> txt = {
+        final Map<String, dynamic> txt = {
           for (final entry in (resolved.txt ?? {}).entries)
             entry.key: (entry.value is List<int>)
                 ? utf8.decode(entry.value as List<int>)
                 : entry.value.toString(),
         };
-        out.add(DeviceEntity(resolved.name ?? '', host ?? '', port, txt));
+
+        final bool license = txt["license"] == "true";
+
+        out.add(DeviceEntity(resolved.name ?? '', host ?? '', port, txt, license));
       });
 
       // Espera ~3–5 s a que aparezcan
@@ -30,7 +33,7 @@ class DeviceModel {
       await stopDiscovery(discovery);
       return out;
     } catch (e) {
-      print(e.toString());
+      print(e);
       throw UnimplementedError();
     }
 

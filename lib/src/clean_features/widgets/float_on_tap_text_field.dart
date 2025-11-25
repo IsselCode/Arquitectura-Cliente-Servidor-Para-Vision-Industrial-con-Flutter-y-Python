@@ -10,6 +10,7 @@ class FloatOnTapTextField extends StatefulWidget {
   final bool obscureText;
   final Color? fillColor;
   final double height;
+  final FormFieldValidator<String>? validator;
 
   const FloatOnTapTextField({
     super.key,
@@ -19,6 +20,7 @@ class FloatOnTapTextField extends StatefulWidget {
     this.obscureText = false,
     this.fillColor,
     this.height = 60,
+    this.validator,
   });
 
   @override
@@ -26,6 +28,10 @@ class FloatOnTapTextField extends StatefulWidget {
 }
 
 class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
+
+  // 👇 Esta key nos permite acceder al FormFieldState
+  // final GlobalKey<FormFieldState<String>> _fieldKey = GlobalKey<FormFieldState<String>>();
+
   final Object _heroTag = Object();
 
   Future<void> _openOverlay() async {
@@ -76,6 +82,7 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
         onTap: _openOverlay,
         child: ExcludeFocus(
           child: CustomTextFormField(
+            // key: _fieldKey,              // 👈 usamos la key aquí
             controller: widget.controller,
             onTap: _openOverlay,
             height: widget.height,
@@ -83,6 +90,9 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
             hintText: widget.hintText,
             prefixIcon: widget.prefixIcon,
             fillColor: widget.fillColor,
+            validator: widget.validator == null
+                ? null
+                : (_) => widget.validator!(widget.controller.text),
             obscureText: widget.obscureText,
           )
         ),

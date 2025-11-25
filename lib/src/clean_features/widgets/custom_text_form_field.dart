@@ -1,6 +1,7 @@
-import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../../core/app/consts.dart';
 
 class CustomTextFormField extends FormField<String> {
   final TextEditingController? controller;
@@ -44,6 +45,7 @@ class CustomTextFormField extends FormField<String> {
 
       final ctrl = controller ?? TextEditingController(text: state.value ?? '');
       ctrl.addListener(() {
+        if (!state.mounted) return; // 👈 evita llamar didChange después de dispose
         if (state.value != ctrl.text) {
           state.didChange(ctrl.text);
         }

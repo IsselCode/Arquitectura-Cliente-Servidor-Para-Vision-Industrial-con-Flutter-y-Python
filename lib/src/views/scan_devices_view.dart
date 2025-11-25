@@ -1,10 +1,13 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/license_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../inject_container.dart';
 import '../clean_features/entities/device_entity.dart';
 import '../clean_features/widgets/scan_pulse_button.dart';
 import '../controller/logic/device_controller.dart';
@@ -160,9 +163,14 @@ class _RightPanel extends StatelessWidget {
                   final d = devices[i];
                   return InkWell(
                     onTap: () {
+                      NavigationService navigationService = locator();
                       DeviceController deviceController = context.read();
                       deviceController.device = d;
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeView(),));
+                      if (d.license) {
+                        navigationService.pushReplacement(HomeView());
+                      } else {
+                        navigationService.navigateTo(LicenseView());
+                      }
                     },
                     borderRadius: BorderRadius.circular(20),
                     child: Ink(
@@ -170,13 +178,27 @@ class _RightPanel extends StatelessWidget {
                         color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 10,
+                      child: Stack(
+                        alignment: Alignment.center,
                         children: [
-                          Image.asset(AppAssets.db, height: 128, width: 128,),
-                          Text(d.name, style: textTheme.titleMedium,),
-                          Text("${d.host}:${d.port}", style: textTheme.titleMedium,)
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 10,
+                            children: [
+                              Image.asset(AppAssets.db, height: 128, width: 128,),
+                              Text(d.name, style: textTheme.titleMedium,),
+                              Text("${d.host}:${d.port}", style: textTheme.titleMedium,)
+                            ],
+                          ),
+                          if (!d.license)
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: Icon(
+                              Icons.workspace_premium_outlined,
+                              color: Colors.red,
+                            )
+                          )
                         ],
                       ),
                     ),

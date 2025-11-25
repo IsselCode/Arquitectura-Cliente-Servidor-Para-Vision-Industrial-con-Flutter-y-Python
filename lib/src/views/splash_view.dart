@@ -1,7 +1,10 @@
 import 'dart:math' as math;
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/license_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashView extends StatefulWidget {
 

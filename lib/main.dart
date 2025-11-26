@@ -4,15 +4,23 @@ import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
+import 'firebase_options.dart';
 import 'inject_container.dart';
 import 'src/controller/logic/theme_controller.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await injectContainer();
 
   runApp(const MyApp());

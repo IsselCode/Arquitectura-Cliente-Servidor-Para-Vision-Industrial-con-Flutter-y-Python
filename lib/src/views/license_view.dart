@@ -7,6 +7,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/c
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
@@ -104,14 +105,14 @@ class _Form extends StatelessWidget {
     LicenseController licenseController = context.read();
 
     context.loaderOverlay.show();
-    CtrlResponse response = await licenseController.insertLicense(license.text);
+    CtrlResponse response = await licenseController.activateLicense(license.text);
     context.loaderOverlay.hide();
     ToastService toastService = locator();
 
     if (response.success) {
       toastService.success("Licencia activada");
       NavigationService navigationService = locator();
-      navigationService.pushReplacement(HomeView());
+      navigationService.pushReplacement(LoginView());
     } else {
       toastService.error(response.message!);
     }

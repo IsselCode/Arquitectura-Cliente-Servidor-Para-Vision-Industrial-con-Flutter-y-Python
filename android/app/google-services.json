@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "109798332672",
+    "project_id": "licenses-a1c29",
+    "storage_bucket": "licenses-a1c29.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109798332672:android:75b75f33b91fcb89b17be5",
+        "android_client_info": {
+          "package_name": "com.example.arquitectura_cliente_sistema_vision"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoBu_D0tpc-0YM3K0Py9G3AzL47e3pCc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109798332672:android:1210572534adae29b17be5",
+        "android_client_info": {
+          "package_name": "com.isselcode.licenses"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoBu_D0tpc-0YM3K0Py9G3AzL47e3pCc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

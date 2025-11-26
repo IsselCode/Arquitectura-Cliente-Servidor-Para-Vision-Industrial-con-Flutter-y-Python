@@ -1,10 +1,16 @@
 import 'dart:math' as math;
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/models/license_model.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/license_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../inject_container.dart';
 
 class SplashView extends StatefulWidget {
 
@@ -55,7 +61,17 @@ class _SplashScreenViewState extends State<SplashView> with TickerProviderStateM
       await Future.delayed(Duration(milliseconds: (circleDuration.inMilliseconds * 0.4).toInt()));
       await _textCtrl.forward();
       await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginView(),));
+
+      LicenseController licenseController = context.read();
+      CtrlResponse resposne = await licenseController.verifyLicense();
+      ToastService toastService = locator();
+      NavigationService navigationService = locator();
+      if (resposne.success){
+        navigationService.pushReplacement(LoginView());
+      } else {
+        toastService.error(resposne.message!);
+        navigationService.pushReplacement(LicenseView());
+      }
     });
   }
 

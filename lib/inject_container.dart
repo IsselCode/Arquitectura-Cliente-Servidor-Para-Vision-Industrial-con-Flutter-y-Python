@@ -4,6 +4,8 @@ import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/theme_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/models/camera_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
 import 'src/controller/logic/license_controller.dart';
@@ -14,6 +16,18 @@ GetIt locator = GetIt.instance;
 
 Future<void> injectContainer() async {
 
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+    encryptedSharedPreferences: true,
+  );
+
+  FlutterSecureStorage storage = FlutterSecureStorage(
+    aOptions: _getAndroidOptions(),
+  );
+
+  // Packages
+  locator.registerLazySingleton(() => storage,);
+  locator.registerLazySingleton(() => FirebaseFirestore.instance,);
+
   // Services
   locator.registerLazySingleton(() => ToastService(),);
   locator.registerLazySingleton(() => NavigationService(),);
@@ -21,7 +35,7 @@ Future<void> injectContainer() async {
   // Models
   locator.registerLazySingleton(() => DeviceModel(),);
   locator.registerLazySingleton(() => CameraModel(),);
-  locator.registerLazySingleton(() => LicenseModel(),);
+  locator.registerLazySingleton(() => LicenseModel(firestore: locator(), storage: locator()),);
 
   // Controllers
 

@@ -1,3 +1,4 @@
+import 'package:arquitectura_cliente_sistema_vision/core/services/database_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
@@ -24,6 +25,9 @@ Future<void> injectContainer() async {
     aOptions: _getAndroidOptions(),
   );
 
+  DatabaseService databaseService = DatabaseService();
+  await databaseService.loadDatabase();
+
   // Packages
   locator.registerLazySingleton(() => storage,);
   locator.registerLazySingleton(() => FirebaseFirestore.instance,);
@@ -31,6 +35,7 @@ Future<void> injectContainer() async {
   // Services
   locator.registerLazySingleton(() => ToastService(),);
   locator.registerLazySingleton(() => NavigationService(),);
+  locator.registerLazySingleton(() => databaseService,);
 
   // Models
   locator.registerLazySingleton(() => DeviceModel(),);

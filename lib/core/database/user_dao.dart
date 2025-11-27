@@ -70,6 +70,21 @@ class UserDAO {
     });
   }
 
+  // Autenticar al usuario
+  Future<Map<String, Object?>?> authenticate(
+      String username,
+      String password,
+      ) async {
+    final result = await db.query(
+      "users",
+      where: "name = ? AND pass = ?",
+      whereArgs: [username, password],
+      limit: 1,
+    );
+
+    return result.isNotEmpty ? result.first : null;
+  }
+
   // Cambiar contraseña
   Future<int> changePassword({
     required int userId,

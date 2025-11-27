@@ -71,6 +71,9 @@ class _Form extends StatelessWidget {
             hintText: "Nombre de usuario",
             prefixIcon: Icons.person_outline,
             fillColor: theme.scaffoldBackgroundColor,
+            validator: (value) {
+              if (value!.isEmpty) return "Campo requerido";
+            },
           ),
 
           FloatOnTapTextField(
@@ -79,6 +82,9 @@ class _Form extends StatelessWidget {
             prefixIcon: Icons.lock_outline,
             fillColor: theme.scaffoldBackgroundColor,
             obscureText: true,
+            validator: (value) {
+              if (value!.isEmpty) return "Campo requerido";
+            },
           ),
 
           const SizedBox(height: 10,),
@@ -94,6 +100,10 @@ class _Form extends StatelessWidget {
   }
 
   cta(BuildContext context) async {
+
+    if (!formKey.currentState!.validate()){
+      return ;
+    }
 
     context.loaderOverlay.show();
     await Future.delayed(const Duration(milliseconds: 500),);

@@ -1,5 +1,7 @@
+import 'package:arquitectura_cliente_sistema_vision/core/app/enums.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/database/user_dao.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/errors/exceptions.dart';
+import 'package:bcrypt/bcrypt.dart';
 
 import '../clean_features/entities/user_entity.dart';
 
@@ -73,27 +75,104 @@ class AuthModel {
   }
 
   Future<UserEntity> insertAdminUser(String name, String pass) async {
-    throw UnimplementedError();
+
+    try {
+      String hashedPassword = BCrypt.hashpw(pass, BCrypt.gensalt());
+      int id = await userDAO.insertAdminUser(name: name, password: hashedPassword);
+
+      return UserEntity(
+        id: id,
+        name: name,
+        encryptPass: hashedPassword,
+        role: AppRole.admin,
+        createAt: DateTime.now()
+      );
+
+    } on AppException catch(e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
+
   }
 
   Future<UserEntity> insertNormalUser(String name, String pass) async {
-    throw UnimplementedError();
+    try {
+      String hashedPassword = BCrypt.hashpw(pass, BCrypt.gensalt());
+      int id = await userDAO.insertNormalUser(name: name, password: hashedPassword);
+
+      return UserEntity(
+        id: id,
+        name: name,
+        encryptPass: hashedPassword,
+        role: AppRole.user,
+        createAt: DateTime.now()
+      );
+
+    } on AppException catch(e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
   }
 
   Future<UserEntity> authenticate(String name, String pass) async {
-    throw UnimplementedError();
+    try {
+
+      UserEntity userEntity = await findUserByName(name);
+
+      final isValid = BCrypt.checkpw(pass, userEntity.encryptPass);
+
+      if (!isValid) throw AppException(message: "Credenciales incorrectas");
+
+      return userEntity;
+
+    } on AppException catch(e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
   }
 
-  Future<void> changePassword(int userId, String newPassword) async {
-    throw UnimplementedError();
+  Future<void> changePassword(int userId, String oldPassword, String newPassword) async {
+
+    try {
+
+      UserEntity userEntity = await findUserById(userId);
+
+      final isValid = BCrypt.checkpw(oldPassword, userEntity.encryptPass);
+
+      if (!isValid) throw AppException(message: "Credenciales incorrectas");
+
+      await userDAO.changePassword(userId: userId, newPassword: newPassword);
+
+    } on AppException catch(e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
+
   }
 
   Future<void> deleteUserById(int uid) async {
-    throw UnimplementedError();
+    try {
+      await userDAO.deleteUserById(uid);
+    } on AppException catch (e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
+
   }
 
   Future<int> countAdmins() async {
-    throw UnimplementedError();
+    try {
+      return await userDAO.countAdmins();
+    } on AppException catch (e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
   }
 
 

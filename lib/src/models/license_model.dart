@@ -111,7 +111,6 @@ class LicenseModel {
 
   Future<LicenseEntity> verifyLicense() async {
     try {
-      await storage.deleteAll();
 
       final activatedStr = await storage.read(key: _LicenseKey);
       final limitStr = await storage.read(key: _LicenseLimit);

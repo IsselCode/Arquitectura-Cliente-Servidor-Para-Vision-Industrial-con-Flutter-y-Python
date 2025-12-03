@@ -65,12 +65,18 @@ class LicenseModel {
         throw AppException(message: "La licencia no existe");
       }
 
+      final data = docSnap.data() as Map<String, dynamic>;
+      final int uses = data["uses"];
+      final int limit = data["limit"];
+
       // Actualizar el estado a true en Firestore
-      await docRef.update({"status": true});
+      if (uses + 1 >= limit) {
+        await docRef.update({"status": true, "uses": FieldValue.increment(1)});
+      } else {
+        await docRef.update({"uses": FieldValue.increment(1)});
+      }
 
       // Leer datos del documento
-      final data = docSnap.data() as Map<String, dynamic>;
-      final int limit = data["limit"];
       final String responsablePersonName = data["responsable_person_name"];
       final String company = data["company"];
       final String system = data["system"];
@@ -105,6 +111,7 @@ class LicenseModel {
 
   Future<LicenseEntity> verifyLicense() async {
     try {
+      await storage.deleteAll();
 
       final activatedStr = await storage.read(key: _LicenseKey);
       final limitStr = await storage.read(key: _LicenseLimit);

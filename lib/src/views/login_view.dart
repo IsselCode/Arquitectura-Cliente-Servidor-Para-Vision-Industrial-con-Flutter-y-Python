@@ -6,6 +6,8 @@ import 'package:arquitectura_cliente_sistema_vision/src/views/scan_devices_view.
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
+import '../clean_features/dialogs/create_admin_user.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
@@ -17,6 +19,14 @@ class LoginView extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await showDialog(
+          context: context,
+          builder: (context) => CreateAdminUserDialog(),
+          );
+        },
+      ),
       body: SafeArea(
         child: Center(
           child: Container(

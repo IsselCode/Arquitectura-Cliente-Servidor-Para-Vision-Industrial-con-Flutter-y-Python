@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/app/consts.dart';
 
@@ -8,11 +9,15 @@ class InfoField2 extends StatelessWidget {
   final String label;
   final double height;
   final Color? backColor;
+  final bool copy;
+  final VoidCallback? copied;
 
   const InfoField2({
     super.key,
     required this.icon,
     required this.label,
+    this.copy = false,
+    this.copied,
     this.height = 50,
     this.backColor,
   });
@@ -43,8 +48,30 @@ class InfoField2 extends StatelessWidget {
               style: textTheme.bodyMedium?.copyWith(color: AppColors.grey),
             )
           ),
+          // Copy
+          if (copy)
+            Material(
+              color: Colors.transparent.withOpacity(0.0001),
+              shape: CircleBorder(),
+              child: InkWell(
+                customBorder: CircleBorder(),
+                onTap: copyToClipboard,
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Icon(Icons.copy_outlined, size: 16),
+                ),
+              ),
+            )
         ],
       ),
     );
   }
+
+  void copyToClipboard() {
+    Clipboard.setData(
+      ClipboardData(text: label)
+    );
+    copied?.call();
+  }
+
 }

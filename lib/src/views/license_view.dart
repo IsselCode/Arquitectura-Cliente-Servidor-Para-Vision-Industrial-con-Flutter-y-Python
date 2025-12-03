@@ -1,10 +1,12 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/create_admin_user.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
@@ -102,17 +104,25 @@ class _Form extends StatelessWidget {
       return;
     }
 
+    ToastService toastService = locator();
     LicenseController licenseController = context.read();
+    AuthController authController = context.read();
 
+    // Activamos la licencia
     context.loaderOverlay.show();
     CtrlResponse response = await licenseController.activateLicense(license.text);
     context.loaderOverlay.hide();
-    ToastService toastService = locator();
 
     if (response.success) {
       toastService.success("Licencia activada");
-      NavigationService navigationService = locator();
-      navigationService.pushReplacement(LoginView());
+      // Crear usuario (ADMIN)
+
+      await showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) => CreateAdminUserDialog(),
+      );
+
     } else {
       toastService.error(response.message!);
     }

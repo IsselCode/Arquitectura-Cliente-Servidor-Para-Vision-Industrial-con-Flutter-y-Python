@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/theme.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/create_admin_user_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
@@ -50,7 +51,12 @@ class MyApp extends StatelessWidget {
                 title: 'Flutter Demo',
                 navigatorKey: locator<NavigationService>().navigatorKey,
                 theme: value.isDark ? darkTheme : lightTheme,
-                home: SplashView(),
+                // home: SplashView(),
+                home: Scaffold(
+                  body: Center(
+                    child: CreateAdminUserView(),
+                  ),
+                ),
               );
             },
           ),

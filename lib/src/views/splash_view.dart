@@ -63,13 +63,15 @@ class _SplashScreenViewState extends State<SplashView> with TickerProviderStateM
       await Future.delayed(const Duration(seconds: 1));
 
       LicenseController licenseController = context.read();
-      CtrlResponse resposne = await licenseController.verifyLicense();
       ToastService toastService = locator();
       NavigationService navigationService = locator();
-      if (resposne.success){
+
+      // Verificamos licencia
+      CtrlResponse response = await licenseController.verifyLicense();
+      if (response.success){
         navigationService.pushReplacement(LoginView());
       } else {
-        toastService.error(resposne.message!);
+        toastService.error(response.message!);
         navigationService.pushReplacement(LicenseView());
       }
     });

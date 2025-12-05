@@ -1,7 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/create_admin_user.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/create_admin_user_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
@@ -115,13 +115,10 @@ class _Form extends StatelessWidget {
 
     if (response.success) {
       toastService.success("Licencia activada");
-      // Crear usuario (ADMIN)
 
-      await showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) => CreateAdminUserDialog(),
-      );
+      // Crear usuario (ADMIN)
+      NavigationService navigationService = locator();
+      navigationService.pushAndRemoveUntil(CreateAdminUserView());
 
     } else {
       toastService.error(response.message!);

@@ -26,4 +26,17 @@ class AuthController extends ChangeNotifier {
 
   }
 
+  Future<CtrlResponse> insertAdminUser(String name, String pass) async {
+
+    try {
+      name = name.trim();
+      UserEntity response = await authModel.insertAdminUser(name, pass);
+      user = response;
+      return CtrlResponse(success: true);
+    } on AppException catch(e) {
+      return CtrlResponse(success: false, message: e.message);
+    }
+
+  }
+
 }

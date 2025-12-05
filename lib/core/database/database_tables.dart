@@ -5,7 +5,7 @@ class DatabaseTables {
   Future<void> initTables(Database db) async {
 
     await db.transaction((txn) async {
-
+      await users(txn);
     },);
 
   }

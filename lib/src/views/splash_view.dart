@@ -3,8 +3,10 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/models/license_model.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/create_admin_user_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/license_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
 import 'package:flutter/material.dart';
@@ -63,13 +65,20 @@ class _SplashScreenViewState extends State<SplashView> with TickerProviderStateM
       await Future.delayed(const Duration(seconds: 1));
 
       LicenseController licenseController = context.read();
+      AuthController authController = context.read();
       ToastService toastService = locator();
       NavigationService navigationService = locator();
 
       // Verificamos licencia
       CtrlResponse response = await licenseController.verifyLicense();
       if (response.success){
-        navigationService.pushReplacement(LoginView());
+        int admins = await authController.countAdmins();
+        if (admins > 0) {
+          navigationService.pushReplacement(LoginView());
+        }
+        else {
+          navigationService.pushReplacement(CreateAdminUserView());
+        }
       } else {
         toastService.error(response.message!);
         navigationService.pushReplacement(LicenseView());

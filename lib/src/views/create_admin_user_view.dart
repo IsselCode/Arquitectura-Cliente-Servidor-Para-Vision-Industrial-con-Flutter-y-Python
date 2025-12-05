@@ -33,83 +33,85 @@ class _CreateAdminUserDialogState extends State<CreateAdminUserView> {
     TextTheme textTheme = theme.textTheme;
     ColorScheme colorScheme = theme.colorScheme;
 
-    return Dialog(
-      child: Container(
-        width: 350,
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(24)
-        ),
-        child: SingleChildScrollView(
-          child: Column(
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: 350,
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(24)
+          ),
+          child: SingleChildScrollView(
+            child: Column(
 
-            spacing: 25,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flex(
-                direction: Axis.vertical,
-                spacing: 10,
-                children: [
-                  //* Titulo
-                  Text("Administrador", style: textTheme.headlineMedium,),
-                  //* Description
-                  Text(
-                    "Crea tu primer cuenta de administrador",
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodyLarge,
-                  ),
-                ],
-              ),
-              Form(
-                key: formKey,
-                child: Flex(
+              spacing: 25,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flex(
                   direction: Axis.vertical,
                   spacing: 10,
                   children: [
-                    //* Usuario
-                    FloatOnTapTextField(
-                      controller: userNameCtrl,
-                      hintText: "Nombre de usuario",
-                      prefixIcon: Icons.person_outline,
-                      fillColor: theme.scaffoldBackgroundColor,
-                      validator: (value) {
-                        if (value!.isEmpty) return "Campo requerido";
-                      },
-                    ),
-                    //* Contraseña
-                    FloatOnTapTextField(
-                      controller: passCtrl,
-                      hintText: "Ingresa una contraseña",
-                      prefixIcon: Icons.password_outlined,
-                      fillColor: theme.scaffoldBackgroundColor,
-                      validator: (value) {
-                        if (value!.isEmpty) return "Campo requerido";
-                        bool same = passCtrl.text == repeatPassCtrl.text;
-                        if (!same) return "Las contraseñas no son iguales";
-                      },
-                    ),
-                    //* Repetir contraseña
-                    FloatOnTapTextField(
-                      controller: repeatPassCtrl,
-                      hintText: "Repite la contraseña",
-                      prefixIcon: Icons.password_outlined,
-                      fillColor: theme.scaffoldBackgroundColor,
-                      validator: (value) {
-                        if (value!.isEmpty) return "Campo requerido";
-                        bool same = passCtrl.text == repeatPassCtrl.text;
-                        if (!same) return "Las contraseñas no son iguales";
-                      },
+                    //* Titulo
+                    Text("Administrador", style: textTheme.headlineMedium,),
+                    //* Description
+                    Text(
+                      "Crea tu primer cuenta de administrador",
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodyLarge,
                     ),
                   ],
                 ),
-              ),
-              //* Cerrar
-              CustomButton(
-                text: "Crear",
-                onTap: cta,
-              )
-            ],
+                Form(
+                  key: formKey,
+                  child: Flex(
+                    direction: Axis.vertical,
+                    spacing: 10,
+                    children: [
+                      //* Usuario
+                      FloatOnTapTextField(
+                        controller: userNameCtrl,
+                        hintText: "Nombre de usuario",
+                        prefixIcon: Icons.person_outline,
+                        fillColor: theme.scaffoldBackgroundColor,
+                        validator: (value) {
+                          if (value!.isEmpty) return "Campo requerido";
+                        },
+                      ),
+                      //* Contraseña
+                      FloatOnTapTextField(
+                        controller: passCtrl,
+                        hintText: "Ingresa una contraseña",
+                        prefixIcon: Icons.password_outlined,
+                        fillColor: theme.scaffoldBackgroundColor,
+                        validator: (value) {
+                          if (value!.isEmpty) return "Campo requerido";
+                          bool same = passCtrl.text == repeatPassCtrl.text;
+                          if (!same) return "Las contraseñas no son iguales";
+                        },
+                      ),
+                      //* Repetir contraseña
+                      FloatOnTapTextField(
+                        controller: repeatPassCtrl,
+                        hintText: "Repite la contraseña",
+                        prefixIcon: Icons.password_outlined,
+                        fillColor: theme.scaffoldBackgroundColor,
+                        validator: (value) {
+                          if (value!.isEmpty) return "Campo requerido";
+                          bool same = passCtrl.text == repeatPassCtrl.text;
+                          if (!same) return "Las contraseñas no son iguales";
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                //* Cerrar
+                CustomButton(
+                  text: "Crear",
+                  onTap: cta,
+                )
+              ],
+            ),
           ),
         ),
       ),

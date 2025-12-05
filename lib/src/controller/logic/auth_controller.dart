@@ -39,4 +39,6 @@ class AuthController extends ChangeNotifier {
 
   }
 
+  Future<int> countAdmins() => authModel.countAdmins();
+
 }

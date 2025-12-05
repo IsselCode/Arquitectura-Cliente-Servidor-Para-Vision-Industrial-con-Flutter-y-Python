@@ -52,11 +52,7 @@ class MyApp extends StatelessWidget {
                 navigatorKey: locator<NavigationService>().navigatorKey,
                 theme: value.isDark ? darkTheme : lightTheme,
                 // home: SplashView(),
-                home: Scaffold(
-                  body: Center(
-                    child: CreateAdminUserView(),
-                  ),
-                ),
+                home: SplashView(),
               );
             },
           ),

@@ -47,7 +47,10 @@ class RadioCard<T> extends StatelessWidget {
             maxLines: 1,
             minFontSize: (size * 0.10).roundToDouble(),
             maxFontSize: (size * 0.15).roundToDouble(),
-            style: textTheme.bodyMedium?.copyWith(fontSize: (size * 0.15).roundToDouble(), color: colorScheme.onSurface),
+            style: textTheme.bodyMedium?.copyWith(
+              fontSize: (size * 0.15).roundToDouble(),
+              color: value == groupValue ? colorScheme.onPrimary : colorScheme.onSurface
+            ),
           )
         ],
       ),

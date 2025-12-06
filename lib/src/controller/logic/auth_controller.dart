@@ -1,3 +1,4 @@
+import 'package:arquitectura_cliente_sistema_vision/core/app/enums.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/errors/exceptions.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/user_entity.dart';
@@ -24,6 +25,18 @@ class AuthController extends ChangeNotifier {
       return CtrlResponse(success: false, message: e.message);
     }
 
+  }
+
+  Future<CtrlResponse> insertNormalUser(String name, String pass, AppRole role) async {
+    try {
+      String stringRole = role.name;
+      name = name.trim();
+      UserEntity response = await authModel.insertNormalUser(name, pass, stringRole);
+      user = response;
+      return CtrlResponse(success: true, message: "Usuario creado correctamente");
+    } on AppException catch(e) {
+      return CtrlResponse(success: false, message: e.message);
+    }
   }
 
   Future<CtrlResponse> insertAdminUser(String name, String pass) async {

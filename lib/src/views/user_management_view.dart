@@ -26,8 +26,8 @@ class _UserManagementViewState extends State<UserManagementView> {
     return Scaffold(
       body: Center(
         child: Container(
-          width: 350,
-          height: 500,
+          width: 455,
+          height: 589,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: colorScheme.surface,
@@ -35,7 +35,7 @@ class _UserManagementViewState extends State<UserManagementView> {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            spacing: 40,
+            spacing: 30,
             children: [
               AssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
               TabSwitcher(

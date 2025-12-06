@@ -1,8 +1,15 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/app/enums.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_card.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:provider/provider.dart';
 
 class UserManagementCreatePage extends StatefulWidget {
   const UserManagementCreatePage({super.key});
@@ -13,6 +20,9 @@ class UserManagementCreatePage extends StatefulWidget {
 
 class _UserManagementCreatePageState extends State<UserManagementCreatePage> {
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
   AppRole selectedRole = AppRole.admin;
 
   @override
@@ -22,24 +32,35 @@ class _UserManagementCreatePageState extends State<UserManagementCreatePage> {
     ColorScheme colorScheme = theme.colorScheme;
 
     return Column(
-      spacing: 40,
+      spacing: 30,
       children: [
         //* Inputs
-        Flex(
-          direction: Axis.vertical,
-          spacing: 10,
-          children: [
-            CustomTextFormField(
-              hintText: "Nombre de usuario",
-              prefixIcon: Icons.person_outline,
-              fillColor: theme.scaffoldBackgroundColor,
-            ),
-            CustomTextFormField(
-              hintText: "Contraseña",
-              prefixIcon: Icons.password_outlined,
-              fillColor: theme.scaffoldBackgroundColor,
-            )
-          ],
+        Form(
+          key: formKey,
+          child: Flex(
+            direction: Axis.vertical,
+            spacing: 10,
+            children: [
+              CustomTextFormField(
+                controller: username,
+                hintText: "Nombre de usuario",
+                prefixIcon: Icons.person_outline,
+                fillColor: theme.scaffoldBackgroundColor,
+                validator: (value) {
+                  if (value!.isEmpty) return "Campo requerido";
+                },
+              ),
+              CustomTextFormField(
+                controller: password,
+                hintText: "Contraseña",
+                prefixIcon: Icons.password_outlined,
+                fillColor: theme.scaffoldBackgroundColor,
+                validator: (value) {
+                  if (value!.isEmpty) return "Campo requerido";
+                },
+              )
+            ],
+          ),
         ),
         //* Roles
         Row(
@@ -72,7 +93,33 @@ class _UserManagementCreatePageState extends State<UserManagementCreatePage> {
           ],
         ),
         //* Botón de registrar
+        CustomButton(
+          text: "Registrar",
+          onTap: cta
+        )
       ],
     );
   }
+
+  cta() async {
+
+    if (!formKey.currentState!.validate()){
+      return ;
+    }
+
+    context.loaderOverlay.show();
+    AuthController authController = context.read();
+    CtrlResponse response = await authController.insertNormalUser(username.text, password.text, selectedRole);
+    context.loaderOverlay.hide();
+
+    ToastService toastService = locator();
+
+    if (response.success) {
+      toastService.success(response.message!);
+    } else {
+      toastService.error(response.message!);
+    }
+
+  }
+
 }

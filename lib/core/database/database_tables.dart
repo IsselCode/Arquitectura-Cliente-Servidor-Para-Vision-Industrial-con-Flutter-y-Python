@@ -18,7 +18,7 @@ class DatabaseTables {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
         pass TEXT NOT NULL,
-        role TEXT NOT NULL CHECK (role IN ("admin", "user")) DEFAULT "user",  
+        role TEXT NOT NULL CHECK (role IN ("admin", "technician", "quality")),  
         create_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
       )
     """);

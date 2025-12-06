@@ -96,16 +96,16 @@ class AuthModel {
 
   }
 
-  Future<UserEntity> insertNormalUser(String name, String pass) async {
+  Future<UserEntity> insertNormalUser(String name, String pass, String role) async {
     try {
       String hashedPassword = BCrypt.hashpw(pass, BCrypt.gensalt());
-      int id = await userDAO.insertNormalUser(name: name, password: hashedPassword);
+      int id = await userDAO.insertNormalUser(name: name, password: hashedPassword, role: role);
 
       return UserEntity(
         id: id,
         name: name,
         encryptPass: hashedPassword,
-        role: AppRole.user,
+        role: AppRole.fromString(role),
         createAt: DateTime.now()
       );
 

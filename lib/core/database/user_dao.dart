@@ -62,11 +62,12 @@ class UserDAO {
   Future<int> insertNormalUser({
     required String name,
     required String password,
+    required String role,
   }) {
     return db.insert("users", {
       "name": name,
       "pass": password,
-      "role": "user",
+      "role": role,
     });
   }
 

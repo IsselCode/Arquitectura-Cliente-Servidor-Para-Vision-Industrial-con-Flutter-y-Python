@@ -17,6 +17,9 @@ class AppAssets {
   static const servidor = "$_baseImages/servidor.png";
   static const trazabilidad = "$_baseImages/trazabilidad.png";
   static const usuarios = "$_baseImages/usuarios.png";
+  static const quality = "$_baseImages/quality.png";
+  static const technician = "$_baseImages/technician.png";
+  static const admin = "$_baseImages/admin.png";
 
 }
 

@@ -1,8 +1,11 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_toggle.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/database_selection_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/user_management_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,11 +16,12 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeController themeController = context.watch();
-
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
     TextTheme textTheme = theme.textTheme;
+
+    ThemeController themeController = context.watch();
+    NavigationService navigationService = locator();
 
     return Scaffold(
       body: SafeArea(
@@ -27,6 +31,8 @@ class HomeView extends StatelessWidget {
             fit: StackFit.expand,
             children: [
 
+
+              //* Tema y Salida
               Positioned(
                 right: 20,
                 child: Row(
@@ -85,7 +91,7 @@ class HomeView extends StatelessWidget {
                           asset: AppAssets.usuarios,
                           title: "Gestionar Usuarios",
                           onTap: () {
-                            print("navegando");
+                            navigationService.navigateTo(UserManagementView());
                           },
                           width: 300,
                           height: 300,

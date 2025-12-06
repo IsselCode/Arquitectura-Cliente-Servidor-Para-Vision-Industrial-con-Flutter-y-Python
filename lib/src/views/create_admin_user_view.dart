@@ -5,6 +5,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/scan_devices_view.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
@@ -134,7 +135,7 @@ class _CreateAdminUserDialogState extends State<CreateAdminUserView> {
 
     if (response.success) {
       NavigationService navigationService = locator();
-      navigationService.pushAndRemoveUntil(HomeView());
+      navigationService.pushAndRemoveUntil(ScanDevicesView());
     } else {
       ToastService toastService = locator();
       toastService.error(response.message!);

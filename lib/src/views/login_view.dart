@@ -1,11 +1,18 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/scan_devices_view.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:provider/provider.dart';
 
+import '../../inject_container.dart';
 import 'create_admin_user_view.dart';
 
 class LoginView extends StatelessWidget {
@@ -108,10 +115,17 @@ class _Form extends StatelessWidget {
     }
 
     context.loaderOverlay.show();
-    await Future.delayed(const Duration(milliseconds: 500),);
+    AuthController authController = context.read();
+    CtrlResponse response = await authController.authenticate(userName.text, password.text);
     context.loaderOverlay.hide();
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ScanDevicesView(),));
+    ToastService toastService = locator();
+    NavigationService navigationService = locator();
+    if (response.success){
+      navigationService.pushAndRemoveUntil(ScanDevicesView());
+    } else {
+      toastService.error(response.message!);
+    }
 
   }
 

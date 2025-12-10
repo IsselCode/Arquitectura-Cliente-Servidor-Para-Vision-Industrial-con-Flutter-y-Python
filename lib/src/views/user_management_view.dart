@@ -24,12 +24,13 @@ class _UserManagementViewState extends State<UserManagementView> {
     ColorScheme colorScheme = theme.colorScheme;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: Container(
             width: 455,
             height: 589,
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(24)
@@ -38,14 +39,26 @@ class _UserManagementViewState extends State<UserManagementView> {
               mainAxisSize: MainAxisSize.min,
               spacing: 30,
               children: [
-                AssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
-                TabSwitcher(
-                  state: state,
-                  leftText: "Crear",
-                  rightText: "Actualizar",
-                  onChanged: changePage,
-                  color: theme.scaffoldBackgroundColor,
+
+                // Cabecera
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Flex(
+                    spacing: 30,
+                    direction: Axis.vertical,
+                    children: [
+                      AssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
+                      TabSwitcher(
+                        state: state,
+                        leftText: "Crear",
+                        rightText: "Actualizar",
+                        onChanged: changePage,
+                        color: theme.scaffoldBackgroundColor,
+                      ),
+                    ],
+                  ),
                 ),
+
                 // Paginas
                 Expanded(
                   child: PageView(

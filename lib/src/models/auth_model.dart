@@ -2,6 +2,7 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/enums.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/database/user_dao.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/errors/exceptions.dart';
 import 'package:bcrypt/bcrypt.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../clean_features/entities/user_entity.dart';
 
@@ -109,6 +110,13 @@ class AuthModel {
         createAt: DateTime.now()
       );
 
+    }
+    on DatabaseException catch(e) {
+      String message = "Error al crear";
+      if (e.getResultCode() == 2067) {
+        message = "El usuario ya existe";
+      }
+      throw AppException(message: message);
     } on AppException catch(e) {
       rethrow;
     } catch (e) {

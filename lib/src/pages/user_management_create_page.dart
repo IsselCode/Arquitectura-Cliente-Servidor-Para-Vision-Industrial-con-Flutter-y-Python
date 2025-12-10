@@ -31,81 +31,84 @@ class _UserManagementCreatePageState extends State<UserManagementCreatePage> {
     TextTheme textTheme = theme.textTheme;
     ColorScheme colorScheme = theme.colorScheme;
 
-    return Column(
-      spacing: 30,
-      children: [
-        //* Inputs
-        Form(
-          key: formKey,
-          child: Flex(
-            direction: Axis.vertical,
-            spacing: 10,
+    return SingleChildScrollView(
+      child: Column(
+        spacing: 30,
+        children: [
+          //* Inputs
+          Form(
+            key: formKey,
+            child: Flex(
+              direction: Axis.vertical,
+              spacing: 10,
+              children: [
+                CustomTextFormField(
+                  controller: username,
+                  hintText: "Nombre de usuario",
+                  prefixIcon: Icons.person_outline,
+                  fillColor: theme.scaffoldBackgroundColor,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return "Campo requerido";
+                  },
+                ),
+                CustomTextFormField(
+                  controller: password,
+                  hintText: "Contraseña",
+                  prefixIcon: Icons.password_outlined,
+                  fillColor: theme.scaffoldBackgroundColor,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return "Campo requerido";
+                  },
+                )
+              ],
+            ),
+          ),
+          //* Roles
+          Row(
+            spacing: 20,
             children: [
-              CustomTextFormField(
-                controller: username,
-                hintText: "Nombre de usuario",
-                prefixIcon: Icons.person_outline,
-                fillColor: theme.scaffoldBackgroundColor,
-                validator: (value) {
-                  if (value!.isEmpty) return "Campo requerido";
-                },
+              RadioCard(
+                value: AppRole.admin,
+                groupValue: selectedRole,
+                label: "Administrador",
+                asset: AppAssets.admin,
+                surfaceColor: theme.scaffoldBackgroundColor,
+                onChanged: (v) => setState(() => selectedRole = v)
               ),
-              CustomTextFormField(
-                controller: password,
-                hintText: "Contraseña",
-                prefixIcon: Icons.password_outlined,
-                fillColor: theme.scaffoldBackgroundColor,
-                validator: (value) {
-                  if (value!.isEmpty) return "Campo requerido";
-                },
+              RadioCard(
+                value: AppRole.technician,
+                groupValue: selectedRole,
+                label: "Técnico",
+                asset: AppAssets.technician,
+                surfaceColor: theme.scaffoldBackgroundColor,
+                onChanged: (v) => setState(() => selectedRole = v)
+              ),
+              RadioCard(
+                value: AppRole.quality,
+                groupValue: selectedRole,
+                label: "Calidad",
+                asset: AppAssets.quality,
+                surfaceColor: theme.scaffoldBackgroundColor,
+                onChanged: (v) => setState(() => selectedRole = v)
               )
             ],
           ),
-        ),
-        //* Roles
-        Row(
-          spacing: 20,
-          children: [
-            RadioCard(
-              value: AppRole.admin,
-              groupValue: selectedRole,
-              label: "Administrador",
-              asset: AppAssets.admin,
-              surfaceColor: theme.scaffoldBackgroundColor,
-              onChanged: (v) => setState(() => selectedRole = v)
-            ),
-            RadioCard(
-              value: AppRole.technician,
-              groupValue: selectedRole,
-              label: "Técnico",
-              asset: AppAssets.technician,
-              surfaceColor: theme.scaffoldBackgroundColor,
-              onChanged: (v) => setState(() => selectedRole = v)
-            ),
-            RadioCard(
-              value: AppRole.quality,
-              groupValue: selectedRole,
-              label: "Calidad",
-              asset: AppAssets.quality,
-              surfaceColor: theme.scaffoldBackgroundColor,
-              onChanged: (v) => setState(() => selectedRole = v)
-            )
-          ],
-        ),
-        //* Botón de registrar
-        CustomButton(
-          text: "Registrar",
-          onTap: cta
-        )
-      ],
+          //* Botón de registrar
+          CustomButton(
+            text: "Registrar",
+            onTap: () => cta(),
+          )
+        ],
+      ),
     );
   }
 
-  cta() async {
+  void cta() async {
 
     if (!formKey.currentState!.validate()){
       return ;
     }
+
 
     context.loaderOverlay.show();
     AuthController authController = context.read();
@@ -116,6 +119,11 @@ class _UserManagementCreatePageState extends State<UserManagementCreatePage> {
 
     if (response.success) {
       toastService.success(response.message!);
+      // Reiniciamos controladores
+      username.text = "";
+      password.text = "";
+      selectedRole = AppRole.admin;
+      setState(() {});
     } else {
       toastService.error(response.message!);
     }

@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/enums.dart';
+import 'package:equatable/equatable.dart';
 
-class UserEntity {
+class UserEntity extends Equatable {
 
   final int id;
   final String name;
@@ -25,5 +26,8 @@ class UserEntity {
       createAt: DateTime.parse(map["create_at"])
     );
   }
+
+  @override
+  List<Object?> get props => [id, name, role];
 
 }

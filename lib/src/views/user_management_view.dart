@@ -24,38 +24,41 @@ class _UserManagementViewState extends State<UserManagementView> {
     ColorScheme colorScheme = theme.colorScheme;
 
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: 455,
-          height: 589,
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(24)
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 30,
-            children: [
-              AssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
-              TabSwitcher(
-                state: state,
-                leftText: "Crear",
-                rightText: "Actualizar",
-                onChanged: changePage,
-                color: theme.scaffoldBackgroundColor,
-              ),
-              // Paginas
-              Expanded(
-                child: PageView(
-                  controller: pageController,
-                  children: [
-                    UserManagementCreatePage(),
-                    UserManagementUpdatePage()
-                  ],
+      body: SafeArea(
+        child: Center(
+          child: Container(
+            width: 455,
+            height: 589,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(24)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 30,
+              children: [
+                AssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
+                TabSwitcher(
+                  state: state,
+                  leftText: "Crear",
+                  rightText: "Actualizar",
+                  onChanged: changePage,
+                  color: theme.scaffoldBackgroundColor,
                 ),
-              )
-            ],
+                // Paginas
+                Expanded(
+                  child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: pageController,
+                    children: [
+                      UserManagementCreatePage(),
+                      UserManagementUpdatePage()
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

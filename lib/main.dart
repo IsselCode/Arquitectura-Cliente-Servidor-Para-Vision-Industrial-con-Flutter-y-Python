@@ -5,6 +5,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_co
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
                 navigatorKey: locator<NavigationService>().navigatorKey,
                 theme: value.isDark ? darkTheme : lightTheme,
                 // home: SplashView(),
-                home: SplashView(),
+                home: HomeView(),
               );
             },
           ),

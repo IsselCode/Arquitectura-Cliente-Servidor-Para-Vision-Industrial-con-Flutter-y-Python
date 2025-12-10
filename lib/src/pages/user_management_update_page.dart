@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/user_entity.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_shimmer.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,17 +75,9 @@ class _UserListState extends State<_UserList> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(
             height: 50,
-            child: Shimmer.fromColors(
-              baseColor: const Color(0xffcfcfcf).withAlpha(150),
-              highlightColor: const Color(0xffcfcfcf).withAlpha(50),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-              )
+            child: CustomShimmer(
+              width: double.infinity,
+              height: double.infinity
             ),
           );
         }

@@ -15,12 +15,14 @@ class CustomTextFormField extends FormField<String> {
   final bool readOnly;
   final VoidCallback? onTap;
   final void Function(String)? onSubmitted;
+  final void Function(String value)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
 
   CustomTextFormField({
     super.key,
     this.controller,
     this.onSubmitted,
+    this.onChanged,
     this.onTap,
     this.inputFormatters,
     this.readOnly = false,
@@ -45,7 +47,7 @@ class CustomTextFormField extends FormField<String> {
 
       final ctrl = controller ?? TextEditingController(text: state.value ?? '');
       ctrl.addListener(() {
-        if (!state.mounted) return; // 👈 evita llamar didChange después de dispose
+        if (!state.mounted) return; // evita llamar didChange después de dispose
         if (state.value != ctrl.text) {
           state.didChange(ctrl.text);
         }
@@ -82,7 +84,10 @@ class CustomTextFormField extends FormField<String> {
                       autofocus: autofocus,
                       focusNode: s._focusNode,
                       obscureText: obscureText && s.showPassword,
-                      onChanged: state.didChange, // integra con el Form
+                      onChanged: onChanged != null ? (value) {
+                        onChanged(value);
+                        state.didChange(value);
+                      } : null, // integra con el Form
                       maxLines: 1,
                       textAlignVertical: TextAlignVertical.center,
                       decoration: InputDecoration.collapsed(

@@ -11,6 +11,7 @@ class FloatOnTapTextField extends StatefulWidget {
   final Color? fillColor;
   final double height;
   final FormFieldValidator<String>? validator;
+  final void Function(String value)? onChanged;
 
   const FloatOnTapTextField({
     super.key,
@@ -21,6 +22,7 @@ class FloatOnTapTextField extends StatefulWidget {
     this.fillColor,
     this.height = 60,
     this.validator,
+    this.onChanged,
   });
 
   @override
@@ -50,6 +52,7 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
             obscureText: widget.obscureText,
             fillColor: widget.fillColor,
             height: widget.height,
+            onChanged: widget.onChanged,
           );
         },
         transitionsBuilder: (context, anim, _, child) {
@@ -87,6 +90,7 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
             onTap: _openOverlay,
             height: widget.height,
             readOnly: true,
+            onChanged: widget.onChanged,
             hintText: widget.hintText,
             prefixIcon: widget.prefixIcon,
             fillColor: widget.fillColor,
@@ -111,6 +115,7 @@ class _FloatingEditorRoute extends StatefulWidget {
   final bool obscureText;
   final Color? fillColor;
   final double height;
+  final void Function(String value)? onChanged;
 
   const _FloatingEditorRoute({
     required this.heroTag,
@@ -120,6 +125,7 @@ class _FloatingEditorRoute extends StatefulWidget {
     required this.obscureText,
     required this.fillColor,
     required this.height,
+    required this.onChanged,
   });
 
   @override
@@ -197,6 +203,7 @@ class _FloatingEditorRouteState extends State<_FloatingEditorRoute> {
                   onSubmitted: (_) => Navigator.of(context).pop(_FloatResult.ok(_controller.text)),
                   obscureText: widget.obscureText,
                   readOnly: false,
+                  onChanged: widget.onChanged,
                 ),
               ),
             ),

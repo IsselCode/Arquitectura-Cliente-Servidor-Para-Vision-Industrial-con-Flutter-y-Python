@@ -15,14 +15,15 @@ class ConfigMachineCtrl extends ChangeNotifier {
     required this.cameraController,
   }) {
     bBoxEditorController = BBoxEditorController();
-    bBoxEditorController.events.listen((event) {
+    bBoxEditorController.events.listen((event) async {
       switch (event) {
         case BoxCreated():
           notifyListeners();
+          await Future.delayed(const Duration(seconds: 5));
         case BoxUpdated():
-
+          notifyListeners();
         case BoxDeleted():
-
+          notifyListeners();
         case BoxSelected():
 
         case BoxesCleared():

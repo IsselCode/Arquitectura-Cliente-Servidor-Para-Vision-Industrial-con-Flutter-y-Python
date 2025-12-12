@@ -1,4 +1,5 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/add_new_tool_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
@@ -303,7 +304,19 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                 children: [
                   Text("Herramientas", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
                   IconButton(
-                    onPressed: () => print("Añadir herramienta"),
+                    onPressed: () async {
+
+                      String? result = await showDialog<String>(
+                        context: context,
+                        builder: (context) => AddNewToolDialog(),
+                      );
+
+                      if (result != null) {
+                        Size size = configMachineCtrl.bBoxEditorController.viewSize;
+                        BBoxEntity bbox = BBoxEntity(center: Offset(size.width/2, size.height/2), w: 100, h: 100, tag: result);
+                        await configMachineCtrl.bBoxEditorController.addBox(bbox);
+                      }
+                    },
                     style: IconButton.styleFrom(
                       backgroundColor: colorScheme.surface,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
@@ -320,10 +333,14 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                   itemBuilder: (context, index) {
                     BBoxEntity bbox = configMachineCtrl.bBoxEditorController.boxes.value[index];
                     return ListTile(
-                      title: Text(bbox.id.toString()),
+                      title: Text(bbox.tag ?? bbox.id.toString()),
                       onTap: () async {
                         await configMachineCtrl.bBoxEditorController.setSelectedBox(bbox.id);
                       },
+                      trailing: IconButton(
+                        onPressed: () async => await configMachineCtrl.bBoxEditorController.removeBox(bbox.id),
+                        icon: Icon(Icons.delete_outline_outlined, color: Colors.red,)
+                      ),
                     );
                   },
                 ),

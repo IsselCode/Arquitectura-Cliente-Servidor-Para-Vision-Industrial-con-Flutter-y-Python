@@ -63,6 +63,17 @@ class AuthController extends ChangeNotifier {
     }
   }
 
+  Future<CtrlResponse> deleteUserById(int id) async {
+
+    try {
+      await authModel.deleteUserById(id);
+      return CtrlResponse(success: true);
+    } on AppException catch(e) {
+      return CtrlResponse(success: false, message: e.message);
+    }
+
+  }
+
   Future<int> countAdmins() => authModel.countAdmins();
 
   Future<CtrlResponse> getUsers() async {

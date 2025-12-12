@@ -132,6 +132,12 @@ class AuthModel {
 
       return await findUserById(userId);
 
+    } on DatabaseException catch(e) {
+      String message = "Error al actualizar";
+      if (e.getResultCode() == 1811) {
+        message = "No puedes actualizar el único admin";
+      }
+      throw AppException(message: message);
     } on AppException catch(e) {
       rethrow;
     } catch (e) {
@@ -181,7 +187,14 @@ class AuthModel {
   Future<void> deleteUserById(int uid) async {
     try {
       await userDAO.deleteUserById(uid);
-    } on AppException catch (e) {
+    } on DatabaseException catch(e) {
+      String message = "Error al eliminar";
+      if (e.getResultCode() == 1811) {
+        message = "No puedes eliminar el unico administrador";
+      }
+      throw AppException(message: message);
+    }
+    on AppException catch (e) {
       rethrow;
     } catch (e) {
       throw AppException(message: "Error desconocido");

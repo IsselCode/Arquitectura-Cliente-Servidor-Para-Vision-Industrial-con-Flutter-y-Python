@@ -109,8 +109,26 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
     );
   }
 
-  void deleteUser() {
-    print("Eliminando usuario");
+  void deleteUser() async {
+
+    AuthController authController = context.read();
+    ToastService toastService = locator();
+
+    context.loaderOverlay.show();
+    CtrlResponse response = await authController.deleteUserById(selectedUser!.id);
+    context.loaderOverlay.hide();
+
+    if (response.success) {
+      Duration duration = Duration(milliseconds: 350);
+      Curve curve = Curves.linearToEaseOut;
+      pageController.animateToPage(0, duration: duration, curve: curve);
+      indexPage = 0;
+      setState(() {});
+      toastService.success("Usuario eliminado");
+    } else {
+      toastService.error(response.message!);
+    }
+
   }
 
   void updateUser() async {

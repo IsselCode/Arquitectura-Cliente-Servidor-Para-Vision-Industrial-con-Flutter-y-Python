@@ -47,7 +47,10 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
                     onChanged: (userEntity) => setState(() {selectedUser = userEntity;}),
                     selectedUser: selectedUser,
                   ),
-                  _UserUpdate()
+                  if (selectedUser != null)
+                  _UserUpdate(
+                    userEntity: selectedUser!,
+                  )
                 ],
               ),
             ),
@@ -193,6 +196,7 @@ class _UserListState extends State<_UserList> {
                 tileColor: theme.scaffoldBackgroundColor,
                 selectedTileColor: colorScheme.primary,
                 title: Text(user.name, style: textTheme.bodyMedium?.copyWith(color: selected ? colorScheme.onPrimary : AppColors.grey),),
+                trailing: Text(user.role.label, style: textTheme.labelSmall?.copyWith(color: selected ? colorScheme.onPrimary : AppColors.grey),),
                 selected: selected,
                 onTap: () => widget.onChanged(user),
               );
@@ -207,7 +211,13 @@ class _UserListState extends State<_UserList> {
 
 //* Actualización
 class _UserUpdate extends StatefulWidget {
-  const _UserUpdate({super.key});
+
+  final UserEntity userEntity;
+
+  const _UserUpdate({
+    super.key,
+    required this.userEntity,
+  });
 
   @override
   State<_UserUpdate> createState() => _UserUpdateState();
@@ -219,6 +229,12 @@ class _UserUpdateState extends State<_UserUpdate> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   AppRole selectedRole = AppRole.admin;
+
+  @override
+  void initState() {
+    super.initState();
+    username.text = widget.userEntity.name;
+  }
 
   @override
   Widget build(BuildContext context) {

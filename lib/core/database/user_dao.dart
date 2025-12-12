@@ -120,4 +120,22 @@ class UserDAO {
     final total = row["total"] as int? ?? 0;
     return total;
   }
+
+  // Actualizar usuario (nombre y rol)
+  Future<int> updateUser({
+    required int userId,
+    required String name,
+    required String role,
+  }) {
+    return db.update(
+      "users",
+      {
+        "name": name,
+        "role": role,
+      },
+      where: "id = ?",
+      whereArgs: [userId],
+    );
+  }
+
 }

@@ -52,6 +52,17 @@ class AuthController extends ChangeNotifier {
 
   }
 
+  Future<CtrlResponse> updateUser(int userId, String newName, AppRole newRole) async {
+    try {
+
+      newName = newName.trim();
+      UserEntity userUpdated = await authModel.updateUser(userId, newName, newRole);
+      return CtrlResponse(success: true);
+    } on AppException catch(e) {
+      return CtrlResponse(success: false, message: e.message);
+    }
+  }
+
   Future<int> countAdmins() => authModel.countAdmins();
 
   Future<CtrlResponse> getUsers() async {

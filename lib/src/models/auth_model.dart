@@ -124,6 +124,22 @@ class AuthModel {
     }
   }
 
+  Future<UserEntity> updateUser(int userId, String name, AppRole role) async {
+
+    try {
+
+      int affectedRows = await userDAO.updateUser(userId: userId, name: name, role: role.name);
+
+      return await findUserById(userId);
+
+    } on AppException catch(e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
+
+  }
+
   Future<UserEntity> authenticate(String name, String pass) async {
     try {
 

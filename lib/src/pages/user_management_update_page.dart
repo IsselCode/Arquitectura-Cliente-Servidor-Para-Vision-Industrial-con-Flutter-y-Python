@@ -6,6 +6,7 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/c
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app/enums.dart';
@@ -23,6 +24,7 @@ class UserManagementUpdatePage extends StatefulWidget {
 
 class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   PageController pageController = PageController();
   int indexPage = 0;
   UserEntity? selectedUser;
@@ -52,12 +54,15 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
                     selectedUser: selectedUser,
                   ),
                   if (selectedUser != null)
-                  _UserUpdate(
-                    userEntity: selectedUser!,
-                    onChanged: (username, role) {
-                      newAppRole = role;
-                      newUsername = username;
-                    },
+                  Form(
+                    key: formKey,
+                    child: _UserUpdate(
+                      userEntity: selectedUser!,
+                      onChanged: (username, role) {
+                        newAppRole = role;
+                        newUsername = username;
+                      },
+                    ),
                   )
                 ],
               ),
@@ -108,10 +113,24 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
     print("Eliminando usuario");
   }
 
-  void updateUser() {
-    print("Actualizando usuario");
-    print(newUsername);
-    print(newAppRole);
+  void updateUser() async {
+
+    if (!formKey.currentState!.validate()){
+      return ;
+    }
+
+    AuthController authController = context.read();
+    ToastService toastService = locator();
+
+    context.loaderOverlay.show();
+    CtrlResponse response = await authController.updateUser(selectedUser!.id, newUsername!, newAppRole!);
+    context.loaderOverlay.hide();
+
+    if (response.success) {
+      toastService.success("Usuario modificado");
+    } else {
+      toastService.error(response.message!);
+    }
   }
 
   void backToList() {
@@ -261,26 +280,23 @@ class _UserUpdateState extends State<_UserUpdate> {
           spacing: 30,
           children: [
             //* Inputs
-            Form(
-              key: formKey,
-              child: Flex(
-                direction: Axis.vertical,
-                spacing: 10,
-                children: [
-                  FloatOnTapTextField(
-                    controller: username,
-                    hintText: "Nombre de usuario",
-                    prefixIcon: Icons.person_outline,
-                    fillColor: theme.scaffoldBackgroundColor,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) return "Campo requerido";
-                    },
-                    onSubmitted: (value) {
-                      widget.onChanged(value, selectedRole);
-                    },
-                  ),
-                ],
-              ),
+            Flex(
+              direction: Axis.vertical,
+              spacing: 10,
+              children: [
+                FloatOnTapTextField(
+                  controller: username,
+                  hintText: "Nombre de usuario",
+                  prefixIcon: Icons.person_outline,
+                  fillColor: theme.scaffoldBackgroundColor,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return "Campo requerido";
+                  },
+                  onSubmitted: (value) {
+                    widget.onChanged(value, selectedRole);
+                  },
+                ),
+              ],
             ),
             //* Roles
             Row(

@@ -12,6 +12,7 @@ class FloatOnTapTextField extends StatefulWidget {
   final double height;
   final FormFieldValidator<String>? validator;
   final void Function(String value)? onChanged;
+  final void Function(String value)? onSubmitted;
 
   const FloatOnTapTextField({
     super.key,
@@ -23,6 +24,7 @@ class FloatOnTapTextField extends StatefulWidget {
     this.height = 60,
     this.validator,
     this.onChanged,
+    this.onSubmitted
   });
 
   @override
@@ -53,6 +55,7 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
             fillColor: widget.fillColor,
             height: widget.height,
             onChanged: widget.onChanged,
+            onSubmitted: widget.onSubmitted,
           );
         },
         transitionsBuilder: (context, anim, _, child) {
@@ -91,6 +94,7 @@ class _FloatOnTapTextFieldState extends State<FloatOnTapTextField> {
             height: widget.height,
             readOnly: true,
             onChanged: widget.onChanged,
+            onSubmitted: widget.onSubmitted,
             hintText: widget.hintText,
             prefixIcon: widget.prefixIcon,
             fillColor: widget.fillColor,
@@ -116,6 +120,7 @@ class _FloatingEditorRoute extends StatefulWidget {
   final Color? fillColor;
   final double height;
   final void Function(String value)? onChanged;
+  final void Function(String)? onSubmitted;
 
   const _FloatingEditorRoute({
     required this.heroTag,
@@ -126,6 +131,7 @@ class _FloatingEditorRoute extends StatefulWidget {
     required this.fillColor,
     required this.height,
     required this.onChanged,
+    required this.onSubmitted
   });
 
   @override
@@ -200,7 +206,10 @@ class _FloatingEditorRouteState extends State<_FloatingEditorRoute> {
                   hintText: widget.hintText,
                   prefixIcon: widget.prefixIcon,
                   focusNode: _focusNode,
-                  onSubmitted: (_) => Navigator.of(context).pop(_FloatResult.ok(_controller.text)),
+                  onSubmitted: (value) {
+                    Navigator.of(context).pop(_FloatResult.ok(_controller.text));
+                    widget.onSubmitted?.call(value);
+                  },
                   obscureText: widget.obscureText,
                   readOnly: false,
                   onChanged: widget.onChanged,

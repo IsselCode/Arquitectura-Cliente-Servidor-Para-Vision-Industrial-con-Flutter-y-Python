@@ -14,7 +14,7 @@ class CustomTextFormField extends FormField<String> {
   final double height;
   final bool readOnly;
   final VoidCallback? onTap;
-  final void Function(String)? onSubmitted;
+  final void Function(String value)? onSubmitted;
   final void Function(String value)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
 

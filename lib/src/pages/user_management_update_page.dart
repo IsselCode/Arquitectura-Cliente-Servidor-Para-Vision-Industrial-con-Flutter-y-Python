@@ -27,6 +27,9 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
   int indexPage = 0;
   UserEntity? selectedUser;
 
+  String? newUsername;
+  AppRole? newAppRole;
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -41,6 +44,7 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
           Expanded(
             child: Material(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: pageController,
                 children: [
                   _UserList(
@@ -50,6 +54,10 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
                   if (selectedUser != null)
                   _UserUpdate(
                     userEntity: selectedUser!,
+                    onChanged: (username, role) {
+                      newAppRole = role;
+                      newUsername = username;
+                    },
                   )
                 ],
               ),
@@ -102,6 +110,8 @@ class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
 
   void updateUser() {
     print("Actualizando usuario");
+    print(newUsername);
+    print(newAppRole);
   }
 
   void backToList() {
@@ -213,10 +223,12 @@ class _UserListState extends State<_UserList> {
 class _UserUpdate extends StatefulWidget {
 
   final UserEntity userEntity;
+  final Function(String username, AppRole role) onChanged;
 
   const _UserUpdate({
     super.key,
     required this.userEntity,
+    required this.onChanged,
   });
 
   @override
@@ -263,16 +275,10 @@ class _UserUpdateState extends State<_UserUpdate> {
                     validator: (value) {
                       if (value == null || value.isEmpty) return "Campo requerido";
                     },
-                  ),
-                  FloatOnTapTextField(
-                    controller: password,
-                    hintText: "Contraseña",
-                    prefixIcon: Icons.password_outlined,
-                    fillColor: theme.scaffoldBackgroundColor,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) return "Campo requerido";
+                    onSubmitted: (value) {
+                      widget.onChanged(value, selectedRole);
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -286,7 +292,10 @@ class _UserUpdateState extends State<_UserUpdate> {
                     label: "Administrador",
                     asset: AppAssets.admin,
                     surfaceColor: theme.scaffoldBackgroundColor,
-                    onChanged: (v) => setState(() => selectedRole = v)
+                    onChanged: (v) {
+                      setState(() => selectedRole = v);
+                      widget.onChanged(username.text, selectedRole);
+                    }
                 ),
                 RadioCard(
                     value: AppRole.technician,
@@ -294,7 +303,10 @@ class _UserUpdateState extends State<_UserUpdate> {
                     label: "Técnico",
                     asset: AppAssets.technician,
                     surfaceColor: theme.scaffoldBackgroundColor,
-                    onChanged: (v) => setState(() => selectedRole = v)
+                    onChanged: (v) {
+                      setState(() => selectedRole = v);
+                      widget.onChanged(username.text, selectedRole);
+                    }
                 ),
                 RadioCard(
                     value: AppRole.quality,
@@ -302,7 +314,10 @@ class _UserUpdateState extends State<_UserUpdate> {
                     label: "Calidad",
                     asset: AppAssets.quality,
                     surfaceColor: theme.scaffoldBackgroundColor,
-                    onChanged: (v) => setState(() => selectedRole = v)
+                    onChanged: (v) {
+                      setState(() => selectedRole = v);
+                      widget.onChanged(username.text, selectedRole);
+                    }
                 )
               ],
             ),

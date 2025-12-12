@@ -265,6 +265,7 @@ class _UserUpdateState extends State<_UserUpdate> {
   void initState() {
     super.initState();
     username.text = widget.userEntity.name;
+    selectedRole = widget.userEntity.role;
   }
 
   @override

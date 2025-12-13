@@ -19,7 +19,6 @@ class ConfigMachineCtrl extends ChangeNotifier {
 
   // Logic Controllers
   DatabaseController databaseController;
-  late BBoxEditorController bBoxEditorController;
 
   // Properties
   DatabaseEntity database;
@@ -95,5 +94,9 @@ class ConfigMachineCtrl extends ChangeNotifier {
   void resetCounters() async {}
 
   //! Tools
+  late BBoxEditorController bBoxEditorController;
+  bool light = false;
+
+  void exposure() async {}
 
 }

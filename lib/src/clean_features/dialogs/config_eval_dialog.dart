@@ -6,6 +6,11 @@ import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_vie
 import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
 import 'package:flutter/material.dart';
 
+enum ConfigEvalType {
+  config,
+  eval
+}
+
 class ConfigEvalDialog extends StatelessWidget {
   const ConfigEvalDialog({super.key});
 
@@ -46,7 +51,7 @@ class ConfigEvalDialog extends StatelessWidget {
                   height: 128,
                   width: 128,
                   color: theme.scaffoldBackgroundColor,
-                  onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ConfigMachineView.init(),)),
+                  onTap: () => Navigator.pop(context, ConfigEvalType.config,),
                 ),
                 ActionBox(
                   asset: AppAssets.configuracion,
@@ -54,7 +59,7 @@ class ConfigEvalDialog extends StatelessWidget {
                   height: 128,
                   width: 128,
                   color: theme.scaffoldBackgroundColor,
-                  onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EvalView(),)),
+                  onTap: () => Navigator.pop(context, ConfigEvalType.eval,),
                 )
               ],
             ),

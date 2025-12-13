@@ -1,5 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/add_new_tool_dialog.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/database_entity.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
@@ -17,13 +18,15 @@ import 'package:bbox_editor/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../inject_container.dart';
+
 class ConfigMachineView extends StatefulWidget {
 
   const ConfigMachineView._();
 
-  static Widget init() {
+  static Widget init(DatabaseEntity database) {
     return ChangeNotifierProvider(
-      create: (context) => ConfigMachineCtrl(cameraController: context.read()),
+      create: (context) => ConfigMachineCtrl(toastService: locator(), database: database, context: context, databaseController: context.read()),
       builder: (context, child) => ConfigMachineView._(),
     );
   }
@@ -36,15 +39,6 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
   
   PageController pageController = PageController(initialPage: 0);
   TabSwitcherAlignStates tabState = TabSwitcherAlignStates.left;
-
-
-  late Future<void> _startFuture;
-  @override
-  void initState() {
-    super.initState();
-    ConfigMachineCtrl configMachineCtrl = context.read();
-    _startFuture = configMachineCtrl.loadInitialData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,29 +102,49 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                 child: Stack(
                   children: [
                     TextBackButton(),
-                    FutureBuilder(
-                      future: _startFuture,
-                      builder: (context, snapshot) {
 
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator(),);
-                        }
-
-                        return Center(
-                          child: Container(
+                    Center(
+                      child: AspectRatio(
+                        aspectRatio: 16/9,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: configMachineCtrl.database.image == null ? () => configMachineCtrl.captureMasterImage(false) : null,
+                          child: Ink(
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
                               color: colorScheme.surface,
-                              borderRadius: BorderRadius.circular(8)
                             ),
                             child: Stack(
                               children: [
 
-                                BBoxEditor(
-                                  camResolution: Size(1920, 1080),
-                                  controller: configMachineCtrl.bBoxEditorController,
-                                  logs: false,
-                                  image: configMachineCtrl.image,
-                                ),
+                                if (configMachineCtrl.database.image == null)
+                                  Center(
+                                    child: Text(
+                                      "Capturar imagen maestra",
+                                      style: textTheme.titleLarge,
+                                    )
+                                  ),
+
+                                if (configMachineCtrl.database.image != null)
+                                  BBoxEditor(
+                                    camResolution: Size(1920, 1080),
+                                    controller: configMachineCtrl.bBoxEditorController,
+                                    logs: false,
+                                    image: NetworkImage("https://i.ibb.co/B2Fy6SVC/prueba.jpg"),
+                                  ),
+
+                                if (configMachineCtrl.database.image != null)
+                                  Positioned(
+                                    left: 10,
+                                    bottom: 10,
+                                    child: Tooltip(
+                                      message: "Capturar nueva imagen maestra",
+                                      child: FloatingActionButton(
+                                        onPressed: () => configMachineCtrl.captureMasterImage(true),
+                                        child: Icon(Icons.camera_outlined)
+                                      ),
+                                    ),
+                                  ),
 
                                 Positioned(
                                   right: 10,
@@ -147,13 +161,14 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                                     child: Icon(configMachineCtrl.bBoxEditorController.bBoxTool.value == BBoxTool.zoom ? Icons.zoom_out_map_outlined : Icons.edit_outlined),
                                   ),
                                 )
+
                               ],
                             ),
                           ),
-                        );
-
-                      },
+                        ),
+                      )
                     )
+
                   ],
                 ),
               )

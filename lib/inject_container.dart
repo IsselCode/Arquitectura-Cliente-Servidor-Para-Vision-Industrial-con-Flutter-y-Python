@@ -4,6 +4,7 @@ import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_ser
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/database_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/theme_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/models/auth_model.dart';
@@ -58,5 +59,6 @@ Future<void> injectContainer() async {
   locator.registerLazySingleton(() => ThemeController(),);
   locator.registerLazySingleton(() => LicenseController(licenseModel: locator<LicenseModel>(), deviceController: locator<DeviceController>()),);
   locator.registerLazySingleton(() => AuthController(authModel: locator()));
+  locator.registerLazySingleton(() => DatabaseController());
 
 }

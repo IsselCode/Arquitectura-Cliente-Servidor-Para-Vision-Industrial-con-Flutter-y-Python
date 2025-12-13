@@ -37,7 +37,20 @@ class ConfigMachineCtrl extends ChangeNotifier {
     image = byteData.buffer.asUint8List();
   }
 
-  //* Machine
+  //! Machine
+  TextEditingController plcIp = TextEditingController();
+  int okPiece = 0;
+  int notOkPiece = 0;
+
+  void connectToPlc() async {}
+
+  void testIllumination() async {}
+
+  void testOkSignal() async {}
+
+  void testNotOkSignal() async {}
+
+  void resetCounters() async {}
 
   //* Tools
 

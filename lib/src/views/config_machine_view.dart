@@ -63,7 +63,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
             spacing: 50,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //! Left Panel
+              //! Side panel
               SizedBox(
                 width: 300,
                 child: Column(
@@ -119,8 +119,8 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                         return Center(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: colorScheme.surface,
-                                borderRadius: BorderRadius.circular(8)
+                              color: colorScheme.surface,
+                              borderRadius: BorderRadius.circular(8)
                             ),
                             child: Stack(
                               children: [

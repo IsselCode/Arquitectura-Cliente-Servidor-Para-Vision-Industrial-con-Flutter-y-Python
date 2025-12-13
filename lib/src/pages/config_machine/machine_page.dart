@@ -25,25 +25,31 @@ class MachinePage extends StatelessWidget {
         direction: Axis.vertical,
         spacing: 10,
         children: [
+
           //* Dirección del PLC
           Flex(
             spacing: 10,
             direction: Axis.vertical,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+
               Text("Dirección IP del PLC", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
+
               FloatOnTapTextField(
-                  height: 50,
-                  controller: TextEditingController(),
-                  hintText: "192.168.x.y:0000",
-                  prefixIcon: Icons.lock_outline
+                height: 50,
+                controller: configMachineCtrl.plcIp,
+                hintText: "192.168.x.y:0000",
+                prefixIcon: Icons.lock_outline
               ),
+
               CustomButton(
                 text: "Asignar",
-                onTap: () => print("Asignando"),
+                onTap: configMachineCtrl.connectToPlc,
               )
+
             ],
           ),
+
           Divider(color: AppColors.grey,),
 
           //* Salidas
@@ -52,24 +58,24 @@ class MachinePage extends StatelessWidget {
             spacing: 10,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text("Dirección IP del PLC", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
+              Text("Salidas", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
               HeaderActionTile(
                 textButton: "Probar",
                 title: "Iluminación Q1",
                 subTitle: "Salida",
-                onPressed: () => print("Probando Iluminación Q1"),
+                onPressed: configMachineCtrl.testIllumination,
               ),
               HeaderActionTile(
                 textButton: "Probar",
                 title: "Señal Ok",
                 subTitle: "Salida",
-                onPressed: () => print("Probando Señal Ok"),
+                onPressed: configMachineCtrl.testOkSignal,
               ),
               HeaderActionTile(
                 textButton: "Probar",
                 title: "Señal NG",
                 subTitle: "Salida",
-                onPressed: () => print("Probando Señal NG"),
+                onPressed: configMachineCtrl.testNotOkSignal,
               )
             ],
           ),
@@ -86,7 +92,7 @@ class MachinePage extends StatelessWidget {
               CustomButton(
                 text: "Reiniciar Contadores",
                 color: Colors.red,
-                onTap: () => print("Reiniciando Contadores"),
+                onTap: configMachineCtrl.resetCounters
               )
             ],
           )

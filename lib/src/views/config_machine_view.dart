@@ -10,6 +10,8 @@ import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/t
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/toggle_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/ui/config_machine_ctrl.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/pages/config_machine/machine_page.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/pages/config_machine/tools_page.dart';
 import 'package:bbox_editor/bbox_editor.dart';
 import 'package:bbox_editor/exports.dart';
 import 'package:flutter/material.dart';
@@ -90,9 +92,9 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                         controller: pageController,
                         physics: NeverScrollableScrollPhysics(),
                         children: [
-                          _leftPanel(),
+                          MachinePage(),
                           Container(),
-                          _rightPanel()
+                          ToolsPage()
                         ],
                       ),
                     )
@@ -160,197 +162,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
         )
       ),
     );
-  }
-  
-  
-  Widget _leftPanel() {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = theme.textTheme;
-    ColorScheme colorScheme = theme.colorScheme;
-    
-    return SingleChildScrollView(
-      child: Flex(
-        direction: Axis.vertical,
-        spacing: 10,
-        children: [
-          //* Dirección del PLC
-          Flex(
-            spacing: 10,
-            direction: Axis.vertical,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text("Dirección IP del PLC", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-              FloatOnTapTextField(
-                  height: 50,
-                  controller: TextEditingController(),
-                  hintText: "192.168.x.y:0000",
-                  prefixIcon: Icons.lock_outline
-              ),
-              CustomButton(
-                text: "Asignar",
-                onTap: () => print("Asignando"),
-              )
-            ],
-          ),
-          Divider(color: AppColors.grey,),
-      
-          //* Salidas
-          Flex(
-            direction: Axis.vertical,
-            spacing: 10,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text("Dirección IP del PLC", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-              HeaderActionTile(
-                textButton: "Probar",
-                title: "Iluminación Q1",
-                subTitle: "Salida",
-                onPressed: () => print("Probando Iluminación Q1"),
-              ),
-              HeaderActionTile(
-                textButton: "Probar",
-                title: "Señal Ok",
-                subTitle: "Salida",
-                onPressed: () => print("Probando Señal Ok"),
-              ),
-              HeaderActionTile(
-                textButton: "Probar",
-                title: "Señal NG",
-                subTitle: "Salida",
-                onPressed: () => print("Probando Señal NG"),
-              )
-            ],
-          ),
-          Divider(color: AppColors.grey,),
-      
-          //* Contadores
-          Flex(
-            direction: Axis.vertical,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 10,
-            children: [
-              InfoField(title: "Piezas Ok", value: "1"),
-              InfoField(title: "Piezas NG", value: "1"),
-              CustomButton(
-                text: "Reiniciar Contadores",
-                color: Colors.red,
-                onTap: () => print("Reiniciando Contadores"),
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
 
-  Widget _rightPanel() {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = theme.textTheme;
-    ColorScheme colorScheme = theme.colorScheme;
-    ConfigMachineCtrl configMachineCtrl = context.watch();
-
-    return Flex(
-      direction: Axis.vertical,
-      spacing: 10,
-      children: [
-        //* Configurar Vistas
-        Flex(
-          spacing: 10,
-          direction: Axis.vertical,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text("Configurar Vistas", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-            CustomDropdown<int>(
-              items: List.generate(5, (index) {
-                return DropdownMenuItem(
-                  value: index,
-                  child: Text(index.toString()),
-                );
-              },),
-              hintText: "Cámara",
-              onChanged: (p0) {
-                print(p0);
-              },
-            ),
-            StepperField(
-              title: "Exposición",
-              minValue: 0,
-              maxValue: 100,
-              onChanged: (value) {
-
-              },
-            ),
-            ToggleField(
-              title: "Luz",
-              value: false,
-              onChanged: (value) {
-
-              },
-            )
-          ],
-        ),
-        Divider(color: AppColors.grey,),
-
-        //* Salidas
-        Expanded(
-          child: Flex(
-            direction: Axis.vertical,
-            spacing: 10,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              //* Texto y Botón
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Herramientas", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-                  IconButton(
-                    onPressed: () async {
-
-                      String? result = await showDialog<String>(
-                        context: context,
-                        builder: (context) => AddNewToolDialog(),
-                      );
-
-                      if (result != null) {
-                        Size size = configMachineCtrl.bBoxEditorController.viewSize;
-                        BBoxEntity bbox = BBoxEntity(center: Offset(size.width/2, size.height/2), w: 100, h: 100, tag: result);
-                        await configMachineCtrl.bBoxEditorController.addBox(bbox);
-                      }
-                    },
-                    style: IconButton.styleFrom(
-                      backgroundColor: colorScheme.surface,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                    ),
-                    icon: Icon(Icons.add_outlined)
-                  ),
-                ],
-              ),
-              //* Lista de Boundings
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(height: 10,),
-                  itemCount: configMachineCtrl.bBoxEditorController.boxes.value.length,
-                  itemBuilder: (context, index) {
-                    BBoxEntity bbox = configMachineCtrl.bBoxEditorController.boxes.value[index];
-                    return ListTile(
-                      title: Text(bbox.tag ?? bbox.id.toString()),
-                      onTap: () async {
-                        await configMachineCtrl.bBoxEditorController.setSelectedBox(bbox.id);
-                      },
-                      trailing: IconButton(
-                        onPressed: () async => await configMachineCtrl.bBoxEditorController.removeBox(bbox.id),
-                        icon: Icon(Icons.delete_outline_outlined, color: Colors.red,)
-                      ),
-                    );
-                  },
-                ),
-              )
-
-            ],
-          ),
-        ),
-      ],
-    );
   }
   
 }

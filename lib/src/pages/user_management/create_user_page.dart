@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
-class UserManagementCreatePage extends StatefulWidget {
-  const UserManagementCreatePage({super.key});
+class CreateUserPage extends StatefulWidget {
+  const CreateUserPage({super.key});
 
   @override
-  State<UserManagementCreatePage> createState() => _UserManagementCreatePageState();
+  State<CreateUserPage> createState() => _CreateUserPageState();
 }
 
-class _UserManagementCreatePageState extends State<UserManagementCreatePage> {
+class _CreateUserPageState extends State<CreateUserPage> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();

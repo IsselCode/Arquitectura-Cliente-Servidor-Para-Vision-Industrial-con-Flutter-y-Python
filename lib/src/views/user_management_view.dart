@@ -1,8 +1,8 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/tab_switcher.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/pages/user_management_create_page.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/pages/user_management_update_page.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/pages/user_management/create_user_page.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/pages/user_management/update_user_page.dart';
 import 'package:flutter/material.dart';
 
 class UserManagementView extends StatefulWidget {
@@ -65,8 +65,8 @@ class _UserManagementViewState extends State<UserManagementView> {
                     physics: NeverScrollableScrollPhysics(),
                     controller: pageController,
                     children: [
-                      UserManagementCreatePage(),
-                      UserManagementUpdatePage()
+                      CreateUserPage(),
+                      UpdateUserPage()
                     ],
                   ),
                 )

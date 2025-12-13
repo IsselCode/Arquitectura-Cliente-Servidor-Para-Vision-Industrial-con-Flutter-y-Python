@@ -9,20 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/app/enums.dart';
-import '../../core/services/toast_service.dart';
-import '../../inject_container.dart';
-import '../clean_features/widgets/radio_card.dart';
+import '../../../core/app/enums.dart';
+import '../../../core/services/toast_service.dart';
+import '../../../inject_container.dart';
+import '../../clean_features/widgets/radio_card.dart';
 
-class UserManagementUpdatePage extends StatefulWidget {
+class UpdateUserPage extends StatefulWidget {
 
-  UserManagementUpdatePage({super.key});
+  UpdateUserPage({super.key});
 
   @override
-  State<UserManagementUpdatePage> createState() => _UserManagementUpdatePageState();
+  State<UpdateUserPage> createState() => _UpdateUserPageState();
 }
 
-class _UserManagementUpdatePageState extends State<UserManagementUpdatePage> {
+class _UpdateUserPageState extends State<UpdateUserPage> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   PageController pageController = PageController();

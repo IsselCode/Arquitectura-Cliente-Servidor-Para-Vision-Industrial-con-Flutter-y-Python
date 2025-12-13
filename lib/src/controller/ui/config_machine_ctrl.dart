@@ -9,7 +9,6 @@ class ConfigMachineCtrl extends ChangeNotifier {
 
   CameraController cameraController;
   late BBoxEditorController bBoxEditorController;
-  late final VoidCallback _boxesListener;
 
   ConfigMachineCtrl({
     required this.cameraController,
@@ -38,6 +37,8 @@ class ConfigMachineCtrl extends ChangeNotifier {
     image = byteData.buffer.asUint8List();
   }
 
-  //* Boundings
+  //* Machine
+
+  //* Tools
 
 }

@@ -2,6 +2,7 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/config_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/database_selection_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/user_management_view.dart';
@@ -16,12 +17,17 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Theme
     ThemeData theme = Theme.of(context);
     ColorScheme colorScheme = theme.colorScheme;
     TextTheme textTheme = theme.textTheme;
 
+    // Services
     ThemeController themeController = context.watch();
     NavigationService navigationService = locator();
+
+    // Controllers
+    ConfigController configController = context.read();
 
     return Scaffold(
       body: SafeArea(
@@ -72,7 +78,13 @@ class HomeView extends StatelessWidget {
                   spacing: 100,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("¿Qué quieres hacer hoy?", style: textTheme.displayLarge,),
+                    Flex(
+                      direction: Axis.vertical,
+                      children: [
+                        Text("¿Qué quieres hacer hoy?", style: textTheme.displayLarge,),
+                        Text("Configuración: ${configController.selectedConfig.dpName}", style: textTheme.titleSmall,),
+                      ],
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

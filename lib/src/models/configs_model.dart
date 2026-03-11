@@ -84,9 +84,34 @@ class ConfigsModel {
     } on AppException catch (e) {
       rethrow;
     } catch (e) {
-      print(e);
       throw AppException(message: "Error desconocido");
     }
+  }
+
+  Future<ConfigEntity> selectCurrentDatabase(String name) async {
+
+    try {
+
+      final response = await http.put(
+        hostPortDeviceService.currentUri(name),
+        headers: {"Content-Type": "application/json"}
+      );
+
+      final dynamic decoded = jsonDecode(response.body);
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        final message = decoded is Map<String, dynamic> ? (decoded["detail"] ?? decoded["message"] ?? "Error al seleccionar la configuración").toString() : "Error al seleccionar la configuración";
+        throw AppException(message: message);
+      }
+
+      return ConfigEntity.fromJson(decoded);
+
+    } on AppException catch(e) {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: "Error desconocido");
+    }
+
   }
 
 }

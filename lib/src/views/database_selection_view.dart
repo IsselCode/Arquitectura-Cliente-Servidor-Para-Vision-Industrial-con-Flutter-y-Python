@@ -3,13 +3,11 @@ import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_ser
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/add_db_dialog.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/config_eval_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/delete_db_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/config_entity.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/config_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -113,20 +111,19 @@ class _DatabaseSelectionViewState extends State<DatabaseSelectionView> {
   }
 
   void onTapDatabase(ConfigEntity configEntity) async {
-    ConfigEvalType? result = await showDialog(
-      context: context,
-      builder: (context) => ConfigEvalDialog(),
-    );
 
-    if (result == null) {
-      return;
-    }
-
+    ConfigController configController = context.read();
     NavigationService navigationService = locator();
-    if (result == ConfigEvalType.config) {
-      navigationService.navigateTo(ConfigMachineView.init(configEntity));
+    ToastService toastService = locator();
+
+    context.loaderOverlay.show();
+    CtrlResponse response = await configController.selectCurrentDatabase(configEntity.filename);
+    context.loaderOverlay.hide();
+
+    if (response.success) {
+      navigationService.navigateTo(HomeView());
     } else {
-      navigationService.navigateTo(EvalView());
+      toastService.error(response.message!);
     }
   }
 

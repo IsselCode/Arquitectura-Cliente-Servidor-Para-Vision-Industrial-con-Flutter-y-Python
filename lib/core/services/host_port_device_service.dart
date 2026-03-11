@@ -43,4 +43,12 @@ class HostPortDeviceService {
     return Uri.parse('$baseUrl/config/$configName');
   }
 
+  Uri currentUri([String? configName]) {
+    if (configName == null || configName.isEmpty) {
+      return Uri.parse('$baseUrl/current');
+    }
+
+    return Uri.parse('$baseUrl/current/$configName');
+  }
+
 }

@@ -1,6 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/database_selection_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/user_management_view.dart';
@@ -29,7 +30,14 @@ class HomeView extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-
+              //* Seleccionar otra configuración
+              Positioned(
+                left: 20,
+                child: SizedBox(
+                  height: 48,
+                  child: TextBackButton()
+                ),
+              ),
 
               //* Tema y Salida
               Positioned(
@@ -50,6 +58,7 @@ class HomeView extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => SplashView(),),
                         (route) => false,
                       ),
+
                       icon: Icon(Icons.exit_to_app, color: Colors.red,),
 
                     ),

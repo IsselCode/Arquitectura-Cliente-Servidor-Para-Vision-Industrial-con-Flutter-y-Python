@@ -14,6 +14,7 @@ class ConfigController extends ChangeNotifier {
 
 
   List<ConfigEntity> configs = [];
+  late ConfigEntity selectedConfig;
 
   Future<CtrlResponse<List<ConfigEntity>>> loadDatabases() async {
     try {
@@ -44,6 +45,18 @@ class ConfigController extends ChangeNotifier {
       await configsModel.deleteConfig(database.filename);
       configs.remove(database);
       notifyListeners();
+      return CtrlResponse(success: true);
+    } on AppException catch(e) {
+      return CtrlResponse(success: false, message: e.message);
+    }
+
+  }
+
+  Future<CtrlResponse> selectCurrentDatabase(String filename) async {
+
+    try {
+      ConfigEntity tempConfig = await configsModel.selectCurrentDatabase(filename);
+      selectedConfig = tempConfig;
       return CtrlResponse(success: true);
     } on AppException catch(e) {
       return CtrlResponse(success: false, message: e.message);

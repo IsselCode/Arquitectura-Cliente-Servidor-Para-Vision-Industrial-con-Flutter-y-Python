@@ -1,13 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/custom_text_form_field.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 class FinishProcessDialog extends StatelessWidget {
   const FinishProcessDialog({super.key});
@@ -32,7 +25,7 @@ class FinishProcessDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               //* Imagen
-              AssetContainer(
+              IsselAssetContainer(
                 asset: AppAssets.logo,
                 height: 84,
                 width: 84,
@@ -46,7 +39,7 @@ class FinishProcessDialog extends StatelessWidget {
                 direction: Axis.vertical,
                 children: [
                   //* Usuario
-                  CustomDropdown<int>(
+                  IsselDropdown<int>(
                     items: List.generate(5, (index) {
                       return DropdownMenuItem(
                         value: index,
@@ -61,7 +54,7 @@ class FinishProcessDialog extends StatelessWidget {
                   ),
 
                   //* Campo de texto
-                  CustomTextFormField(
+                  IsselTextFormField(
                     // controller: nameCtrl,
                     height: 50,
                     hintText: "Contraseña",
@@ -80,13 +73,13 @@ class FinishProcessDialog extends StatelessWidget {
                 direction: Axis.vertical,
                 children: [
                   //* Aceptar
-                  CustomButton(
+                  IsselButton(
                     text: "Terminar",
                     color: Colors.red,
                     onTap: () => Navigator.pop(context, true),
                   ),
                   //* Cancelar
-                  CustomButton(
+                  IsselButton(
                     color: Colors.transparent,
                     textColor: AppColors.grey,
                     text: "Regresar",

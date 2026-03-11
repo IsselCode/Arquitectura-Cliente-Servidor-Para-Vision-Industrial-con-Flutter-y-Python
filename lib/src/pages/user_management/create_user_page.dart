@@ -3,12 +3,9 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/enums.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_card.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +42,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                 direction: Axis.vertical,
                 spacing: 10,
                 children: [
-                  FloatOnTapTextField(
+                  IsselFloatTextField(
                     controller: username,
                     hintText: "Nombre de usuario",
                     prefixIcon: Icons.person_outline,
@@ -54,7 +51,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                       if (value == null || value.isEmpty) return "Campo requerido";
                     },
                   ),
-                  FloatOnTapTextField(
+                  IsselFloatTextField(
                     controller: password,
                     hintText: "Contraseña",
                     prefixIcon: Icons.password_outlined,
@@ -70,7 +67,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
             Row(
               spacing: 20,
               children: [
-                RadioCard(
+                IsselRadioCard(
                   value: AppRole.admin,
                   groupValue: selectedRole,
                   label: "Administrador",
@@ -78,7 +75,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                   surfaceColor: theme.scaffoldBackgroundColor,
                   onChanged: (v) => setState(() => selectedRole = v)
                 ),
-                RadioCard(
+                IsselRadioCard(
                   value: AppRole.technician,
                   groupValue: selectedRole,
                   label: "Técnico",
@@ -86,7 +83,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                   surfaceColor: theme.scaffoldBackgroundColor,
                   onChanged: (v) => setState(() => selectedRole = v)
                 ),
-                RadioCard(
+                IsselRadioCard(
                   value: AppRole.quality,
                   groupValue: selectedRole,
                   label: "Calidad",
@@ -97,7 +94,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
               ],
             ),
             //* Botón de registrar
-            CustomButton(
+            IsselButton(
               text: "Registrar",
               onTap: () => cta(),
             )

@@ -1,9 +1,8 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/tab_switcher.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/pages/user_management/create_user_page.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/pages/user_management/update_user_page.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 class UserManagementView extends StatefulWidget {
   const UserManagementView({super.key});
@@ -47,8 +46,8 @@ class _UserManagementViewState extends State<UserManagementView> {
                     spacing: 30,
                     direction: Axis.vertical,
                     children: [
-                      AssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
-                      TabSwitcher(
+                      IsselAssetContainer(asset: AppAssets.logo, width: 64, height: 64,),
+                      IsselTabSwitcher(
                         state: state,
                         leftText: "Crear",
                         rightText: "Actualizar",

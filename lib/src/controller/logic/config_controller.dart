@@ -1,19 +1,26 @@
 import 'package:arquitectura_cliente_sistema_vision/core/errors/exceptions.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/database_entity.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/config_entity.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/models/configs_model.dart';
 import 'package:flutter/material.dart';
 
-class DatabaseController extends ChangeNotifier {
+class ConfigController extends ChangeNotifier {
 
-  List<DatabaseEntity> databases = [];
+  ConfigsModel configsModel;
 
-  Future<CtrlResponse> loadDatabases() async {
+  ConfigController({
+    required this.configsModel
+  });
 
+
+  List<ConfigEntity> configs = [];
+
+  Future<CtrlResponse<List<ConfigEntity>>> loadDatabases() async {
     try {
-      databases = await Future.delayed(const Duration(seconds: 1), () => fakeDatabases,);
-      return CtrlResponse(success: true, element: databases);
+      configs = await configsModel.listConfigs();
+      return CtrlResponse<List<ConfigEntity>>(success: true, element: configs);
     } on AppException catch(e) {
-      return CtrlResponse(success: false, message: e.message);
+      return CtrlResponse<List<ConfigEntity>>(success: false, message: e.message);
     }
 
   }
@@ -21,7 +28,9 @@ class DatabaseController extends ChangeNotifier {
   Future<CtrlResponse> createDatabase(String name) async {
 
     try {
-      DatabaseEntity databaseEntity = await Future.delayed(const Duration(seconds: 1), () => throw AppException(message: "Método no implementado"),);
+      ConfigEntity newConfig = await configsModel.createConfig(name);
+      configs.add(newConfig);
+      notifyListeners();
       return CtrlResponse(success: true);
     } on AppException catch(e) {
       return CtrlResponse(success: false, message: e.message);
@@ -29,10 +38,12 @@ class DatabaseController extends ChangeNotifier {
 
   }
 
-  Future<CtrlResponse> deleteDabatase(DatabaseEntity database) async {
+  Future<CtrlResponse> deleteDabatase(ConfigEntity database) async {
 
     try {
-      await Future.delayed(const Duration(seconds: 1), () => throw AppException(message: "Método no implementado"),);
+      await configsModel.deleteConfig(database.filename);
+      configs.remove(database);
+      notifyListeners();
       return CtrlResponse(success: true);
     } on AppException catch(e) {
       return CtrlResponse(success: false, message: e.message);
@@ -40,6 +51,7 @@ class DatabaseController extends ChangeNotifier {
 
   }
 
+  //TODO: CAPTURE MASTER IMAGE
   Future<CtrlResponse> captureMasterImage() async {
 
     try {

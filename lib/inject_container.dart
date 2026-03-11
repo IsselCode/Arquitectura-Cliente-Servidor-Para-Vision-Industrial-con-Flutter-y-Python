@@ -1,14 +1,16 @@
 import 'package:arquitectura_cliente_sistema_vision/core/database/user_dao.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/database_service.dart';
+import 'package:arquitectura_cliente_sistema_vision/core/services/host_port_device_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/database_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/config_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/device_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/theme_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/models/auth_model.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/models/camera_model.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/models/configs_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -43,22 +45,22 @@ Future<void> injectContainer() async {
   locator.registerLazySingleton(() => ToastService(),);
   locator.registerLazySingleton(() => NavigationService(),);
   locator.registerLazySingleton(() => databaseService,);
+  locator.registerLazySingleton(() => HostPortDeviceService(),);
 
   // Models
   locator.registerLazySingleton(() => DeviceModel(),);
   locator.registerLazySingleton(() => CameraModel(),);
   locator.registerLazySingleton(() => LicenseModel(firestore: locator(), storage: locator()),);
   locator.registerLazySingleton(() => AuthModel(userDAO: locator()),);
+  locator.registerLazySingleton(() => ConfigsModel(hostPortDeviceService: locator()),);
+
 
   // Controllers
-
-
-  // Controllers
-  locator.registerLazySingleton(() => DeviceController(model: locator()),);
+  locator.registerLazySingleton(() => DeviceController(model: locator(), hostPortDeviceService: locator()),);
   locator.registerLazySingleton(() => CameraController(cameraModel: locator()),);
   locator.registerLazySingleton(() => ThemeController(),);
   locator.registerLazySingleton(() => LicenseController(licenseModel: locator<LicenseModel>(), deviceController: locator<DeviceController>()),);
   locator.registerLazySingleton(() => AuthController(authModel: locator()));
-  locator.registerLazySingleton(() => DatabaseController());
+  locator.registerLazySingleton(() => ConfigController(configsModel: locator()));
 
 }

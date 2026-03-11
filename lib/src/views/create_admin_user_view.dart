@@ -2,15 +2,13 @@ import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_ser
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/scan_devices_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
-import '../clean_features/widgets/float_on_tap_text_field.dart';
 
 class CreateAdminUserView extends StatefulWidget {
 
@@ -70,7 +68,7 @@ class _CreateAdminUserDialogState extends State<CreateAdminUserView> {
                     spacing: 10,
                     children: [
                       //* Usuario
-                      FloatOnTapTextField(
+                      IsselFloatTextField(
                         controller: userNameCtrl,
                         hintText: "Nombre de usuario",
                         prefixIcon: Icons.person_outline,
@@ -80,7 +78,7 @@ class _CreateAdminUserDialogState extends State<CreateAdminUserView> {
                         },
                       ),
                       //* Contraseña
-                      FloatOnTapTextField(
+                      IsselFloatTextField(
                         controller: passCtrl,
                         hintText: "Ingresa una contraseña",
                         prefixIcon: Icons.password_outlined,
@@ -92,7 +90,7 @@ class _CreateAdminUserDialogState extends State<CreateAdminUserView> {
                         },
                       ),
                       //* Repetir contraseña
-                      FloatOnTapTextField(
+                      IsselFloatTextField(
                         controller: repeatPassCtrl,
                         hintText: "Repite la contraseña",
                         prefixIcon: Icons.password_outlined,
@@ -107,7 +105,7 @@ class _CreateAdminUserDialogState extends State<CreateAdminUserView> {
                   ),
                 ),
                 //* Cerrar
-                CustomButton(
+                IsselButton(
                   text: "Crear",
                   onTap: cta,
                 )

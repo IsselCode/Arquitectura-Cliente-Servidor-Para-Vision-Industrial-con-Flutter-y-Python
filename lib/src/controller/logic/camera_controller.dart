@@ -9,8 +9,8 @@ class CameraController extends ChangeNotifier {
     required this.cameraModel
   });
 
-  Future<Size> startCamera() => cameraModel.startCamera();
-
-  String streamCamera() => cameraModel.streamCamera();
+  // Future<Size> startCamera() => cameraModel.startCamera();
+  //
+  // String streamCamera() => cameraModel.streamCamera();
 
 }

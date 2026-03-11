@@ -33,7 +33,6 @@ class DeviceModel {
       await stopDiscovery(discovery);
       return out;
     } catch (e) {
-      print(e);
       throw UnimplementedError();
     }
 

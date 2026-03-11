@@ -1,6 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/theme.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/database_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/config_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/create_admin_user_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
        ChangeNotifierProvider(create: (context) => locator<ThemeController>(),),
        ChangeNotifierProvider(create: (context) => locator<LicenseController>(),),
        ChangeNotifierProvider(create: (context) => locator<AuthController>(),),
-       ChangeNotifierProvider(create: (context) => locator<DatabaseController>(),)
+       ChangeNotifierProvider(create: (context) => locator<ConfigController>(),)
       ],
       child: GlobalLoaderOverlay(
         child: ToastificationWrapper(
@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
                 title: 'Flutter Demo',
                 navigatorKey: locator<NavigationService>().navigatorKey,
                 theme: value.isDark ? darkTheme : lightTheme,
-                // home: SplashView(),
-                home: HomeView(),
+                home: SplashView(),
+                // home: HomeView(),
               );
             },
           ),

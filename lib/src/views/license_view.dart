@@ -3,14 +3,10 @@ import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_ser
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/create_admin_user_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/license_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +37,7 @@ class LicenseView extends StatelessWidget {
               spacing: 20,
               children: [
 
-                AssetContainer(asset: AppAssets.logo, color: theme.scaffoldBackgroundColor,),
+                IsselAssetContainer(asset: AppAssets.logo, color: theme.scaffoldBackgroundColor,),
 
                 Text("Licencia", style: textTheme.displayMedium,),
 
@@ -75,7 +71,7 @@ class _Form extends StatelessWidget {
         spacing: 10,
         children: [
 
-          FloatOnTapTextField(
+          IsselFloatTextField(
             controller: license,
             hintText: "XXXXXXXXXXXXXXXX",
             prefixIcon: Icons.workspace_premium_outlined,
@@ -88,7 +84,7 @@ class _Form extends StatelessWidget {
 
           const SizedBox(height: 10,),
 
-          CustomButton(
+          IsselButton(
             text: "Ingresar",
             onTap: () => cta(context),
           )

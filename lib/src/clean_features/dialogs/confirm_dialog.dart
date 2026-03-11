@@ -1,8 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 class ConfirmDialog extends StatelessWidget {
 
@@ -37,7 +35,7 @@ class ConfirmDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               //* Imagen
-              AssetContainer(
+              IsselAssetContainer(
                 asset: AppAssets.db,
                 height: 84,
                 width: 84,
@@ -53,14 +51,14 @@ class ConfirmDialog extends StatelessWidget {
                 ],
               ),
               //* Action Boxes
-              CustomButton(
+              IsselButton(
                 text: textButton,
                 onTap: () {
                   Navigator.pop(context, true);
                 },
               ),
               //* Cancelar
-              CustomButton(
+              IsselButton(
                 color: Colors.transparent,
                 textColor: AppColors.grey,
                 text: "¡No, Gracias!",

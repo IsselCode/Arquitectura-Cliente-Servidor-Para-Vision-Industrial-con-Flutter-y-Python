@@ -3,9 +3,9 @@ import 'dart:typed_data';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/confirm_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/database_entity.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/config_entity.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/camera_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/database_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/config_controller.dart';
 import 'package:bbox_editor/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -18,10 +18,10 @@ class ConfigMachineCtrl extends ChangeNotifier {
   ToastService toastService;
 
   // Logic Controllers
-  DatabaseController databaseController;
+  ConfigController databaseController;
 
   // Properties
-  DatabaseEntity database;
+  ConfigEntity database;
 
   ConfigMachineCtrl({
     required this.context,
@@ -48,10 +48,10 @@ class ConfigMachineCtrl extends ChangeNotifier {
 
   //! BboxEditor
   void captureMasterImage(bool reCapture) async {
-    
+
     bool? reCaptureResult;
     if (reCapture){
-      
+
       reCaptureResult = await showDialog(
         context: context,
         builder: (context) => ConfirmDialog(
@@ -61,7 +61,7 @@ class ConfigMachineCtrl extends ChangeNotifier {
       );
 
       if (reCaptureResult == null || !reCaptureResult) return;
-      
+
     }
 
     context.loaderOverlay.show();
@@ -70,7 +70,7 @@ class ConfigMachineCtrl extends ChangeNotifier {
 
     if (response.success) {
       toastService.success("Imagen capturada");
-      database = database.copywith(image: response.element!);
+      database = database.copywith(imgMaestra: response.element!);
       notifyListeners();
     } else {
       toastService.error(response.message!);

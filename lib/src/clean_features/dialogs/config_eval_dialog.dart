@@ -1,10 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 enum ConfigEvalType {
   config,
@@ -33,7 +29,7 @@ class ConfigEvalDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //* Imagen
-            AssetContainer(
+            IsselAssetContainer(
               asset: AppAssets.db,
               height: 84,
               width: 84,
@@ -45,7 +41,7 @@ class ConfigEvalDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 25,
               children: [
-                ActionBox(
+                IsselActionBox(
                   asset: AppAssets.pieza,
                   title: "Configurar",
                   height: 128,
@@ -53,7 +49,7 @@ class ConfigEvalDialog extends StatelessWidget {
                   color: theme.scaffoldBackgroundColor,
                   onTap: () => Navigator.pop(context, ConfigEvalType.config,),
                 ),
-                ActionBox(
+                IsselActionBox(
                   asset: AppAssets.configuracion,
                   title: "Evaluar",
                   height: 128,
@@ -64,7 +60,7 @@ class ConfigEvalDialog extends StatelessWidget {
               ],
             ),
             //* Cancelar
-            CustomButton(
+            IsselButton(
               color: Colors.transparent,
               textColor: AppColors.grey,
               text: "Cancelar",

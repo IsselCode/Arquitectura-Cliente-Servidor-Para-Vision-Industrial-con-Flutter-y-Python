@@ -1,18 +1,7 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/stepper_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/tab_switcher.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/header_action_tile.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/radio_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
-import '../clean_features/widgets/info_field_2.dart';
-import '../clean_features/widgets/radio_card.dart';
-import '../clean_features/widgets/toggle_field.dart';
 
 enum Role {
   admin,
@@ -44,15 +33,15 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
             spacing: 10,
             children: [
 
-              AssetContainer(asset: AppAssets.logo),
+              IsselIsselAssetContainer(asset: AppAssets.logo),
 
-              CustomTextFormField(
+              IsselTextFormField(
                 hintText: "Nombre de usuario",
                 prefixIcon: Icons.person_outline,
                 height: 50,
               ),
 
-              CustomButton(
+              IsselButton(
                 text: "Ingresar",
                 onTap: () => print("Ingresando"),
               ),
@@ -61,7 +50,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  RadioCard(
+                  IsselRadioCard(
                     value: Role.admin,
                     groupValue: role,
                     size: 100,
@@ -69,7 +58,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                     asset: AppAssets.logo,
                     onChanged: (v) => setState(() => role = v)
                   ),
-                  RadioCard(
+                  IsselRadioCard(
                     value: Role.calidad,
                     groupValue: role,
                     size: 100,
@@ -77,7 +66,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                     asset: AppAssets.logo,
                     onChanged: (v) => setState(() => role = v)
                   ),
-                  RadioCard(
+                  IsselRadioCard(
                     value: Role.tecnico,
                     groupValue: role,
                     size: 100,
@@ -94,30 +83,27 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                   direction: Axis.vertical,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RadioTile(
+                    IsselRadioTile(
                       value: Role.admin,
                       groupValue: role,
                       height: 50,
                       label: "Admin",
-                      asset: AppAssets.logo,
                       onChanged: (v) => setState(() => role = v),
                       alignment: Alignment.centerLeft,
                     ),
-                    RadioTile(
+                    IsselRadioTile(
                       value: Role.calidad,
                       groupValue: role,
                       height: 50,
                       label: "Calidad",
-                      asset: AppAssets.logo,
                       onChanged: (v) => setState(() => role = v),
                       alignment: Alignment.centerLeft,
                     ),
-                    RadioTile(
+                    IsselRadioTile(
                       value: Role.tecnico,
                       groupValue: role,
                       height: 50,
                       label: "Técnico",
-                      asset: AppAssets.logo,
                       onChanged: (v) => setState(() => role = v),
                       alignment: Alignment.centerLeft,
                     ),
@@ -125,7 +111,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 ),
               ),
 
-              HeaderActionTile(
+              IsselHeaderActionTile(
                 title: "Iluminación Q1",
                 subTitle: "Salida",
                 textButton: "Probar",
@@ -134,7 +120,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 },
               ),
 
-              TabSwitcher(
+              IsselTabSwitcher(
                 leftText: "Crear",
                 rightText: "Actualizar",
                 onChanged: (value) {
@@ -143,7 +129,7 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 state: TabSwitcherAlignStates.left,
               ),
 
-              StepperField(
+              IsselStepperField(
                 title: "Exposición",
                 maxValue: 20,
                 minValue: -10,
@@ -152,12 +138,12 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 }
               ),
 
-              InfoField(
+              IsselInfoField(
                 title: "Piezas Ok",
                 value: "5"
               ),
 
-              ToggleField(
+              IsselToggleField(
                 title: "Luz",
                 value: toggleField,
                 onChanged: (value) {
@@ -166,12 +152,12 @@ class _ShowWidgetsViewState extends State<ShowWidgetsView> {
                 },
               ),
 
-              InfoField2(
+              IsselInfoField2(
                 icon: Icons.timer_outlined,
                 label: "12s"
               ),
 
-              CustomDropdown<int>(
+              IsselDropdown<int>(
                 hintText: "Nombre de usuario",
                 items: List.generate(
                   5,

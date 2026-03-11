@@ -2,18 +2,14 @@ import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/toast_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/scan_devices_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../inject_container.dart';
-import 'create_admin_user_view.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -40,7 +36,7 @@ class LoginView extends StatelessWidget {
               spacing: 20,
               children: [
 
-                AssetContainer(asset: AppAssets.logo, color: theme.scaffoldBackgroundColor,),
+                IsselAssetContainer(asset: AppAssets.logo, color: theme.scaffoldBackgroundColor,),
 
                 Text("¡Bienvenido!", style: textTheme.displayMedium,),
 
@@ -75,7 +71,7 @@ class _Form extends StatelessWidget {
         spacing: 10,
         children: [
 
-          FloatOnTapTextField(
+          IsselFloatTextField(
             controller: userName,
             hintText: "Nombre de usuario",
             prefixIcon: Icons.person_outline,
@@ -85,7 +81,7 @@ class _Form extends StatelessWidget {
             },
           ),
 
-          FloatOnTapTextField(
+          IsselFloatTextField(
             controller: password,
             hintText: "Contraseña",
             prefixIcon: Icons.lock_outline,
@@ -98,7 +94,7 @@ class _Form extends StatelessWidget {
 
           const SizedBox(height: 10,),
 
-          CustomButton(
+          IsselButton(
             text: "Ingresar",
             onTap: () => cta(context),
           )

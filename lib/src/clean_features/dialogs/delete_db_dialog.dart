@@ -1,10 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 class DeleteDBDialog extends StatelessWidget {
   const DeleteDBDialog({super.key});
@@ -28,7 +24,7 @@ class DeleteDBDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             //* Imagen
-            AssetContainer(
+            IsselAssetContainer(
               asset: AppAssets.db,
               height: 84,
               width: 84,
@@ -51,13 +47,13 @@ class DeleteDBDialog extends StatelessWidget {
               ],
             ),
             //* Action Boxes
-            CustomButton(
+            IsselButton(
               text: "Eliminar",
               color: Colors.red,
               onTap: () => Navigator.pop(context, true),
             ),
             //* Cancelar
-            CustomButton(
+            IsselButton(
               color: Colors.transparent,
               textColor: AppColors.grey,
               text: "Cancelar",

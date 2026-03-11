@@ -1,13 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app/consts.dart';
-import '../../clean_features/widgets/custom_button.dart';
-import '../../clean_features/widgets/float_on_tap_text_field.dart';
-import '../../clean_features/widgets/header_action_tile.dart';
-import '../../clean_features/widgets/info_field.dart';
 import '../../controller/ui/config_machine_ctrl.dart';
 
 class MachinePage extends StatelessWidget {
@@ -35,14 +32,14 @@ class MachinePage extends StatelessWidget {
 
               Text("Dirección IP del PLC", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
 
-              FloatOnTapTextField(
+              IsselFloatTextField(
                 height: 50,
                 controller: configMachineCtrl.plcIp,
                 hintText: "192.168.x.y:0000",
                 prefixIcon: Icons.lock_outline
               ),
 
-              CustomButton(
+              IsselButton(
                 text: "Asignar",
                 onTap: configMachineCtrl.connectToPlc,
               )
@@ -59,19 +56,19 @@ class MachinePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text("Salidas", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-              HeaderActionTile(
+              IsselHeaderActionTile(
                 textButton: "Probar",
                 title: "Iluminación Q1",
                 subTitle: "Salida",
                 onPressed: configMachineCtrl.testIllumination,
               ),
-              HeaderActionTile(
+              IsselHeaderActionTile(
                 textButton: "Probar",
                 title: "Señal Ok",
                 subTitle: "Salida",
                 onPressed: configMachineCtrl.testOkSignal,
               ),
-              HeaderActionTile(
+              IsselHeaderActionTile(
                 textButton: "Probar",
                 title: "Señal NG",
                 subTitle: "Salida",
@@ -87,9 +84,9 @@ class MachinePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             spacing: 10,
             children: [
-              InfoField(title: "Piezas Ok", value: "1"),
-              InfoField(title: "Piezas NG", value: "1"),
-              CustomButton(
+              IsselInfoField(title: "Piezas Ok", value: "1"),
+              IsselInfoField(title: "Piezas NG", value: "1"),
+              IsselButton(
                 text: "Reiniciar Contadores",
                 color: Colors.red,
                 onTap: configMachineCtrl.resetCounters

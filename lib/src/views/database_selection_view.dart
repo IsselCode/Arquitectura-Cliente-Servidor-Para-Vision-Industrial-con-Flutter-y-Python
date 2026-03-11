@@ -5,19 +5,15 @@ import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/add_db_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/config_eval_dialog.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/delete_db_dialog.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/config_entity.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/database_entity.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_carousel.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_shimmer.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/database_controller.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/config_controller.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/config_machine_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/eval_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
-
 
 class DatabaseSelectionView extends StatefulWidget {
   const DatabaseSelectionView({super.key});
@@ -27,13 +23,12 @@ class DatabaseSelectionView extends StatefulWidget {
 }
 
 class _DatabaseSelectionViewState extends State<DatabaseSelectionView> {
-
-  late Future<CtrlResponse> _loadDatabases;
+  late Future<CtrlResponse<List<ConfigEntity>>> _loadDatabases;
 
   @override
   void initState() {
     super.initState();
-    DatabaseController databaseController = context.read();
+    ConfigController databaseController = context.read();
     _loadDatabases = databaseController.loadDatabases();
   }
 
@@ -41,6 +36,8 @@ class _DatabaseSelectionViewState extends State<DatabaseSelectionView> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+
+    ConfigController configController = context.watch();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -51,53 +48,63 @@ class _DatabaseSelectionViewState extends State<DatabaseSelectionView> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-          child: Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 100,
             children: [
-              TextBackButton(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 100,
-                children: [
-                  Text("Selecciona una base de datos", style: textTheme.displayLarge),
+              Text("Selecciona una configuracion", style: textTheme.displayLarge),
+              FutureBuilder<CtrlResponse<List<ConfigEntity>>>(
+                future: _loadDatabases,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return IsselShimmer(width: double.infinity, height: 300);
+                  }
 
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error al cargar configuraciones"),
+                    );
+                  }
 
-                  FutureBuilder(
-                    future: _loadDatabases,
-                    builder: (context, snapshot) {
+                  final response = snapshot.data;
+                  if (response == null) {
+                    return Center(child: Text("Sin datos"));
+                  }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CustomShimmer(width: double.infinity, height: 300);
-                      }
+                  if (!response.success) {
+                    return Center(
+                      child: Text(
+                        response.message ?? "Error al cargar configuraciones",
+                      ),
+                    );
+                  }
 
-                      List<DatabaseEntity> databases = snapshot.data!.element;
+                  final List<ConfigEntity> configs = configController.configs;
+                  if (configs.isEmpty) {
+                    return Center(
+                      child: Text("No hay configuraciones disponibles"),
+                    );
+                  }
 
-                      return CustomCarousel(
+                  return IsselCarousel(
+                    height: 300,
+                    itemCount: configs.length,
+                    onChanged: (i) => debugPrint('Seleccionado: $i'),
+                    itemBuilder: (context, index, isSelected) {
+                      final ConfigEntity configEntity = configs[index];
+                      return IsselActionBox(
+                        asset: AppAssets.db,
+                        title: configEntity.dpName,
                         height: 300,
-                        itemCount: databases.length,
-                        onChanged: (i) => debugPrint('Seleccionado: $i'),
-                        itemBuilder: (context, index, isSelected) {
-                          DatabaseEntity databaseEntity = databases[index];
-
-                          return GestureDetector(
-                            onTap: () => debugPrint('Tap ${databaseEntity.name}'),
-                            child: ActionBox(
-                              asset: AppAssets.db,
-                              title: databaseEntity.name,
-                              height: 300,
-                              width: 300,
-                              onTap: () => onTapDatabase(databaseEntity),
-                              onDeleteTap: isSelected ? () => onDeleteDatabase(context, databaseEntity) : null,
-                              color: colorScheme.surface
-                            ),
-                          );
-                        },
+                        width: double.infinity,
+                        onTap: () => onTapDatabase(configEntity),
+                        onDeleteTap: isSelected ? () => onDeleteDatabase(context, configEntity) : null,
+                        color: colorScheme.surface,
                       );
-
                     },
-                  ),
-
-                ],
-              )
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -105,27 +112,32 @@ class _DatabaseSelectionViewState extends State<DatabaseSelectionView> {
     );
   }
 
-  void onTapDatabase(DatabaseEntity databaseEntity) async {
-    ConfigEvalType? result = await showDialog(context: context, builder: (context) => ConfigEvalDialog());
+  void onTapDatabase(ConfigEntity configEntity) async {
+    ConfigEvalType? result = await showDialog(
+      context: context,
+      builder: (context) => ConfigEvalDialog(),
+    );
 
     if (result == null) {
-      return ;
+      return;
     }
 
     NavigationService navigationService = locator();
-    if (result == ConfigEvalType.config){
-      navigationService.navigateTo(ConfigMachineView.init(databaseEntity));
+    if (result == ConfigEvalType.config) {
+      navigationService.navigateTo(ConfigMachineView.init(configEntity));
     } else {
       navigationService.navigateTo(EvalView());
     }
-
   }
 
-  void onDeleteDatabase(BuildContext context, DatabaseEntity databaseEntity) async {
-    bool? result = await showDialog(context: context, builder: (context) => DeleteDBDialog(),);
+  void onDeleteDatabase(BuildContext context, ConfigEntity databaseEntity) async {
+    bool? result = await showDialog(
+      context: context,
+      builder: (context) => DeleteDBDialog(),
+    );
 
     if (result != null && result) {
-      DatabaseController databaseController = context.read();
+      ConfigController databaseController = context.read();
       ToastService toastService = locator();
 
       context.loaderOverlay.show();
@@ -137,33 +149,28 @@ class _DatabaseSelectionViewState extends State<DatabaseSelectionView> {
       } else {
         toastService.error(response.message!);
       }
-
     }
-
   }
 
   void createNewDatabase() async {
-
     String? result = await showDialog(
       context: context,
-      builder: (context) => AddDBDialog()
+      builder: (context) => AddDBDialog(),
     );
 
-    if (result == null){
-      return ;
+    if (result == null) {
+      return;
     }
 
-    DatabaseController databaseController = context.read();
+    ConfigController databaseController = context.read();
     ToastService toastService = locator();
     context.loaderOverlay.show();
     CtrlResponse response = await databaseController.createDatabase(result);
     context.loaderOverlay.hide();
-    if (response.success){
+    if (response.success) {
       toastService.success("Base de datos creada");
     } else {
       toastService.error(response.message!);
     }
-
   }
-
 }

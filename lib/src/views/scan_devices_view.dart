@@ -1,10 +1,9 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/home_view.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/views/database_selection_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/license_view.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../inject_container.dart';
@@ -126,7 +125,7 @@ class _RightPanel extends StatelessWidget {
             Text('Sin dispositivos', style: TextStyle(fontSize: 16)),
             SizedBox(
               width: 250,
-              child: CustomButton(
+              child: IsselButton(
                 text: "Reintentar",
                 onTap: () {
                   Navigator.pushReplacement(
@@ -162,16 +161,7 @@ class _RightPanel extends StatelessWidget {
                 itemBuilder: (context, i) {
                   final d = devices[i];
                   return InkWell(
-                    onTap: () {
-                      NavigationService navigationService = locator();
-                      DeviceController deviceController = context.read();
-                      deviceController.device = d;
-                      if (d.license) {
-                        navigationService.pushReplacement(HomeView());
-                      } else {
-                        navigationService.navigateTo(LicenseView());
-                      }
-                    },
+                    onTap: () => setDevice(context, d),
                     borderRadius: BorderRadius.circular(20),
                     child: Ink(
                       decoration: BoxDecoration(
@@ -213,7 +203,14 @@ class _RightPanel extends StatelessWidget {
   }
 
   void setDevice(BuildContext context, DeviceEntity device) {
+    NavigationService navigationService = locator();
     DeviceController deviceController = context.read();
     deviceController.device = device;
+    if (device.license) {
+      navigationService.pushReplacement(DatabaseSelectionView());
+    } else {
+      navigationService.navigateTo(LicenseView());
+    }
   }
+
 }

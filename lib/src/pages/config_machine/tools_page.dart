@@ -1,12 +1,10 @@
 import 'package:bbox_editor/exports.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app/consts.dart';
 import '../../clean_features/dialogs/add_new_tool_dialog.dart';
-import '../../clean_features/widgets/custom_dropdown.dart';
-import '../../clean_features/widgets/stepper_field.dart';
-import '../../clean_features/widgets/toggle_field.dart';
 import '../../controller/ui/config_machine_ctrl.dart';
 
 class ToolsPage extends StatelessWidget {
@@ -30,7 +28,7 @@ class ToolsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text("Configurar Vistas", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-            CustomDropdown<int>(
+            IsselDropdown<int>(
               items: List.generate(5, (index) {
                 return DropdownMenuItem(
                   value: index,
@@ -42,7 +40,7 @@ class ToolsPage extends StatelessWidget {
                 print(p0);
               },
             ),
-            StepperField(
+            IsselStepperField(
               title: "Exposición",
               minValue: 0,
               maxValue: 100,
@@ -50,7 +48,7 @@ class ToolsPage extends StatelessWidget {
 
               },
             ),
-            ToggleField(
+            IsselToggleField(
               title: "Luz",
               value: false,
               onChanged: (value) {

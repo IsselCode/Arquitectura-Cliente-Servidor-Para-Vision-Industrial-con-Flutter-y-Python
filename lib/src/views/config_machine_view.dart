@@ -1,21 +1,13 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/add_new_tool_dialog.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/database_entity.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_dropdown.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/header_action_tile.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/stepper_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/tab_switcher.dart';
+import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/config_entity.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/toggle_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/ui/config_machine_ctrl.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/pages/config_machine/machine_page.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/pages/config_machine/tools_page.dart';
 import 'package:bbox_editor/bbox_editor.dart';
 import 'package:bbox_editor/exports.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../inject_container.dart';
@@ -24,7 +16,7 @@ class ConfigMachineView extends StatefulWidget {
 
   const ConfigMachineView._();
 
-  static Widget init(DatabaseEntity database) {
+  static Widget init(ConfigEntity database) {
     return ChangeNotifierProvider(
       create: (context) => ConfigMachineCtrl(toastService: locator(), database: database, context: context, databaseController: context.read()),
       builder: (context, child) => ConfigMachineView._(),
@@ -64,7 +56,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                   spacing: 10,
                   children: [
                     //* Pestañas
-                    TabSwitcher(
+                    IsselTabSwitcher(
                       leftText: "Maquina",
                       rightText: "Herramienta",
                       state: tabState,
@@ -108,7 +100,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                         aspectRatio: 16/9,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(8),
-                          onTap: configMachineCtrl.database.image == null ? () => configMachineCtrl.captureMasterImage(false) : null,
+                          onTap: configMachineCtrl.database.imgMaestra == null ? () => configMachineCtrl.captureMasterImage(false) : null,
                           child: Ink(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
@@ -117,7 +109,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                             child: Stack(
                               children: [
 
-                                if (configMachineCtrl.database.image == null)
+                                if (configMachineCtrl.database.imgMaestra == null)
                                   Center(
                                     child: Text(
                                       "Capturar imagen maestra",
@@ -125,7 +117,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                                     )
                                   ),
 
-                                if (configMachineCtrl.database.image != null)
+                                if (configMachineCtrl.database.imgMaestra != null)
                                   BBoxEditor(
                                     camResolution: Size(1920, 1080),
                                     controller: configMachineCtrl.bBoxEditorController,
@@ -133,7 +125,7 @@ class _ConfigMachineViewState extends State<ConfigMachineView>  {
                                     image: NetworkImage("https://i.ibb.co/B2Fy6SVC/prueba.jpg"),
                                   ),
 
-                                if (configMachineCtrl.database.image != null)
+                                if (configMachineCtrl.database.imgMaestra != null)
                                   Positioned(
                                     left: 10,
                                     bottom: 10,

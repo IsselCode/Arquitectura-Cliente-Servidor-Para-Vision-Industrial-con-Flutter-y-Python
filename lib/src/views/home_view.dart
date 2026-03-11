@@ -1,12 +1,11 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/core/services/navigation_service.dart';
 import 'package:arquitectura_cliente_sistema_vision/inject_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/action_box.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_toggle.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/database_selection_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/splash_view.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/views/user_management_view.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/logic/theme_controller.dart';
@@ -38,7 +37,7 @@ class HomeView extends StatelessWidget {
                 child: Row(
                   spacing: 10,
                   children: [
-                    CustomToggle(
+                    IsselToggle(
                       height: 36,
                       width: 50,
                       backColor: colorScheme.surface,
@@ -69,7 +68,7 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         //* Configuración y evaluación
-                        ActionBox(
+                        IsselActionBox(
                           asset: AppAssets.configuracion,
                           title: "Configuración y evaluación",
                           onTap: () {
@@ -78,7 +77,7 @@ class HomeView extends StatelessWidget {
                           width: 300,
                           height: 300,
                         ),
-                        ActionBox(
+                        IsselActionBox(
                           asset: AppAssets.trazabilidad,
                           title: "Trazabilidad",
                           onTap: () {
@@ -87,7 +86,7 @@ class HomeView extends StatelessWidget {
                           width: 300,
                           height: 300,
                         ),
-                        ActionBox(
+                        IsselActionBox(
                           asset: AppAssets.usuarios,
                           title: "Gestionar Usuarios",
                           onTap: () {

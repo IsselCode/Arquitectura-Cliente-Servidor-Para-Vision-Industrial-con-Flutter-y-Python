@@ -1,8 +1,6 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/asset_container.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 class AddDBDialog extends StatelessWidget {
 
@@ -33,7 +31,7 @@ class AddDBDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 //* Imagen
-                AssetContainer(
+                IsselAssetContainer(
                   asset: AppAssets.db,
                   height: 84,
                   width: 84,
@@ -48,7 +46,7 @@ class AddDBDialog extends StatelessWidget {
                   ],
                 ),
                 //* Campo de texto
-                CustomTextFormField(
+                IsselTextFormField(
                   controller: nameCtrl,
                   hintText: "Base de datos",
                   prefixIcon: Icons.ac_unit,
@@ -58,7 +56,7 @@ class AddDBDialog extends StatelessWidget {
                   },
                 ),
                 //* Action Boxes
-                CustomButton(
+                IsselButton(
                   text: "Crear",
                   onTap: () {
 
@@ -70,7 +68,7 @@ class AddDBDialog extends StatelessWidget {
                   },
                 ),
                 //* Cancelar
-                CustomButton(
+                IsselButton(
                   color: Colors.transparent,
                   textColor: AppColors.grey,
                   text: "¡No, Gracias!",

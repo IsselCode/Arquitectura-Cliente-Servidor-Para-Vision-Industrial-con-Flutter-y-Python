@@ -1,11 +1,9 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/dialogs/finish_process_dialog.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/info_field_2.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/text_back_button.dart';
 
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 
 class EvalView extends StatelessWidget {
 
@@ -79,29 +77,29 @@ class EvalView extends StatelessWidget {
               style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
             Divider(color: AppColors.grey,),
             Text("QR Leído", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-            InfoField2(
+            IsselInfoField2(
               height: 50,
               label: "545914523539",
               icon: Icons.qr_code_2_outlined,
             ),
             Text("Duración de la prueba", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-            InfoField2(
+            IsselInfoField2(
               height: 50,
               label: "12s",
               icon: Icons.access_time_outlined,
             ),
             Text("Fecha del sistema", style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-            InfoField2(
+            IsselInfoField2(
               height: 50,
               label: "asd",
               icon: Icons.calendar_month_outlined,
             ),
-            InfoField(
+            IsselInfoField(
               height: 50,
               title: "Piezas Ok",
               value: "1",
             ),
-            InfoField(
+            IsselInfoField(
               height: 50,
               title: "Piezas NG",
               value: "1",
@@ -112,7 +110,7 @@ class EvalView extends StatelessWidget {
         Spacer(),
 
         // Terminar proceso
-        CustomButton(
+        IsselButton(
           text: "Terminar proceso",
           color: Colors.red,
           onTap: () async {

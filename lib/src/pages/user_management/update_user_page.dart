@@ -1,18 +1,15 @@
 import 'package:arquitectura_cliente_sistema_vision/core/app/consts.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/ctrl_response.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/clean_features/entities/user_entity.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_button.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/custom_shimmer.dart';
-import 'package:arquitectura_cliente_sistema_vision/src/clean_features/widgets/float_on_tap_text_field.dart';
 import 'package:arquitectura_cliente_sistema_vision/src/controller/logic/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:issel_code_widgets/issel_code_widgets.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/app/enums.dart';
 import '../../../core/services/toast_service.dart';
 import '../../../inject_container.dart';
-import '../../clean_features/widgets/radio_card.dart';
 
 class UpdateUserPage extends StatefulWidget {
 
@@ -77,14 +74,14 @@ class _UpdateUserPageState extends State<UpdateUserPage> {
               children: [
                 if (indexPage == 1)
                 Expanded(
-                  child: CustomButton(
+                  child: IsselButton(
                     text: "Eliminar",
                     color: Colors.red,
                     onTap: deleteUser,
                   ),
                 ),
                 Expanded(
-                  child: CustomButton(
+                  child: IsselButton(
                     text: indexPage == 1 ? "Actualizar" : "Siguiente",
                     onTap: indexPage == 1 ? updateUser : selectUser,
                   ),
@@ -97,7 +94,7 @@ class _UpdateUserPageState extends State<UpdateUserPage> {
           if (indexPage == 1)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: CustomButton(
+            child: IsselButton(
               text: "Atras",
               textColor: AppColors.grey,
               color: Colors.transparent,
@@ -217,7 +214,7 @@ class _UserListState extends State<_UserList> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return SizedBox(
               height: 50,
-              child: CustomShimmer(
+              child: IsselShimmer(
                 width: double.infinity,
                 height: double.infinity,
               ),
@@ -303,7 +300,7 @@ class _UserUpdateState extends State<_UserUpdate> {
               direction: Axis.vertical,
               spacing: 10,
               children: [
-                FloatOnTapTextField(
+                IsselFloatTextField(
                   controller: username,
                   hintText: "Nombre de usuario",
                   prefixIcon: Icons.person_outline,
@@ -321,7 +318,7 @@ class _UserUpdateState extends State<_UserUpdate> {
             Row(
               spacing: 20,
               children: [
-                RadioCard(
+                IsselRadioCard(
                     value: AppRole.admin,
                     groupValue: selectedRole,
                     label: "Administrador",
@@ -332,7 +329,7 @@ class _UserUpdateState extends State<_UserUpdate> {
                       widget.onChanged(username.text, selectedRole);
                     }
                 ),
-                RadioCard(
+                IsselRadioCard(
                     value: AppRole.technician,
                     groupValue: selectedRole,
                     label: "Técnico",
@@ -343,7 +340,7 @@ class _UserUpdateState extends State<_UserUpdate> {
                       widget.onChanged(username.text, selectedRole);
                     }
                 ),
-                RadioCard(
+                IsselRadioCard(
                     value: AppRole.quality,
                     groupValue: selectedRole,
                     label: "Calidad",
